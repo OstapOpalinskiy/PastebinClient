@@ -43,6 +43,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
     public void onResume() {
         User user = ((NavigationDrawerActivity)getActivity()).getUser();
         userKey = user.getUserKey();
+        getActivity().setTitle(getResources().getString(R.string.paste_code));
         super.onResume();
     }
 
@@ -61,7 +62,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
 
     @Override
     public void setCode(String title, String code) {
-        getActivity().setTitle(getResources().getString(R.string.login));
+        getActivity().setTitle(getResources().getString(R.string.paste_code));
         tvCode.setText(code);
     }
 
