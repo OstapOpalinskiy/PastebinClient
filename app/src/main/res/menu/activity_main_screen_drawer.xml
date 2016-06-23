@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <item
+            android:id="@+id/nav_new_paste"
+            android:title="New paste" />
+        <item
+            android:id="@+id/nav_trending"
+            android:title="Trending" />
+        <item
+            android:id="@+id/nav_my_pastes"
+            android:title="My pastes" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_log_in"
+            android:title="Login" />
+</menu>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="@dimen/fragment_margin">
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_login_FL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <EditText
+            android:id="@+id/et_login_FL"
+            style="@style/EditTextStyle.Login"
+            android:layout_marginTop="44dp"
+            android:hint="@string/login_hint" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_password_FL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/til_login_FL">
+
+        <EditText
+            android:id="@+id/et_password_FL"
+            style="@style/EditTextStyle.Login"
+            android:layout_below="@+id/til_login_FL"
+            android:layout_marginBottom="@dimen/lf_bottom_margin"
+            android:ems="10"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_login_FL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/til_password_FL"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/lf_bottom_margin"
+        android:clickable="true"
+        android:text="@string/login"
+        style="@style/TvLoginStyle" />
+
+
+</RelativeLayout>

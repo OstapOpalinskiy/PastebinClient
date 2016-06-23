@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet_view"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    app:behavior_peekHeight="70dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    tools:context=".screens.mainScreen.view.NavigationDrawerActivity"
+    tools:showIn="@layout/app_bar_main_screen">
+
+    <ImageView
+        android:id="@+id/iv_BS"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/arrow_up"
+        android:text="Hello bottom sheet" />
+
+    <LinearLayout
+        android:id="@+id/ll_syntax_BS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_BS"
+        android:weightSum="3"
+        style="@style/bottomSheetLayoutStyle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Syntax highlighting:"
+            style="@style/textViewBSheetStyle" />
+
+        <Spinner
+            android:id="@+id/spinner_syntax_BS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_expiration_BS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_syntax_BS"
+        android:weightSum="3"
+        style="@style/bottomSheetLayoutStyle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Paste expiration:"
+            style="@style/textViewBSheetStyle" />
+
+        <Spinner
+            android:id="@+id/spinner_expiration_BS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_exposure_BS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_expiration_BS"
+        android:weightSum="3"
+        style="@style/bottomSheetLayoutStyle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Paste exposure:"
+            style="@style/textViewBSheetStyle" />
+
+        <Spinner
+            android:id="@+id/spinner_exposure_BS"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_paste_name_BS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_exposure_BS"
+        android:weightSum="3"
+        style="@style/bottomSheetLayoutStyle">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Paste name:"
+            style="@style/textViewBSheetStyle" />
+
+        <EditText
+            android:id="@+id/et_paste_name_BS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_exposure_BS" />
+    </LinearLayout>
+
+</RelativeLayout>
