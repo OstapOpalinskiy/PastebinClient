@@ -54,8 +54,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        Log.d(Constants.TAG, "onSaveInstanceState");
-//        outState.putSerializable(Constants.LOGIN_KEY, "login");
         super.onSaveInstanceState(outState);
     }
 
@@ -93,20 +91,17 @@ public class NavigationDrawerActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         Bundle args = new Bundle();
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_new_paste) {
             NewPasteFragment fragment = new NewPasteFragment();
             commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, true);
-            // Toast.makeText(NavigationDrawerActivity.this, "new paste", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_trending) {
             MyPastesFragment fragment = new MyPastesFragment();
             args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.TRENDING_PASTES);
             fragment.setArguments(args);
             commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, true);
-            //Toast.makeText(NavigationDrawerActivity.this, "trending", Toast.LENGTH_SHORT).show();
 
         } else if (id == R.id.nav_my_pastes) {
             MyPastesFragment fragment = new MyPastesFragment();
@@ -121,7 +116,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
             LoginFragment fragment = new LoginFragment();
             commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, true);
 
-            //    Toast.makeText(NavigationDrawerActivity.this, "login", Toast.LENGTH_SHORT).show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

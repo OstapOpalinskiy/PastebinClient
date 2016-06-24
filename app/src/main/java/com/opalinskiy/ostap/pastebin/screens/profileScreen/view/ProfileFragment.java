@@ -92,4 +92,10 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
         tvLocation = (TextView) view.findViewById(R.id.tv_location_PF);
         tvLogOut = (TextView) view.findViewById(R.id.tv_logout_PF);
     }
+
+    @Override
+    public void onDestroy() {
+        presenter.onDestroy();
+        super.onDestroy();
+    }
 }

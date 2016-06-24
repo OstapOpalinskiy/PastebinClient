@@ -52,5 +52,6 @@
     <string name="logout">Logout</string>
     <string name="no_data">No data</string>
     <string name="paste_code">Paste code</string>
+    <string name="input_some_code">Please, input some code.</string>
 </resources>
 

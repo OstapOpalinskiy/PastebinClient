@@ -15,9 +15,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-/**
- * Created by Evronot on 10.06.2016.
- */
+
 public class DataInteractor implements IDataInteractor {
     private Api connection;
     private ConverterUtils converterUtils;

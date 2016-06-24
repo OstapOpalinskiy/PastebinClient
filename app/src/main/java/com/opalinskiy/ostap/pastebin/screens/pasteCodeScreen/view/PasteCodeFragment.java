@@ -73,7 +73,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
 
     @Override
     public void onDestroy() {
-//        presenter.onDestroy();
+        presenter.onDestroy();
         super.onDestroy();
     }
 }

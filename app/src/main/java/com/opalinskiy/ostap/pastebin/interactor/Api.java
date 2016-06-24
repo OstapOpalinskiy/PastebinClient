@@ -24,17 +24,8 @@ public interface Api {
         @POST("api/api_post.php")
         Call<ResponseBody> getListOfPastes(@FieldMap Map<String, String> map);
 
-        @FormUrlEncoded
-        @POST("api/api_raw.php")
-        Call<String> getUserPasteCode(@FieldMap Map<String, String> map);
-
-
         @POST("raw/{pasteCode}")
         Call<String> getRawPasteCode(@Path("pasteCode")String pasteCode);
-
-        @FormUrlEncoded
-        @POST("api/api_post.php")
-        Call<ResponseBody> getListOfTrendingPastes(@FieldMap Map<String, String> map);
 
         @FormUrlEncoded
         @POST("api/api_post.php")

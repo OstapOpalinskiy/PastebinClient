@@ -7,9 +7,7 @@ import com.opalinskiy.ostap.pastebin.screens.profileScreen.IProfileScreen;
 import com.opalinskiy.ostap.pastebin.screens.mainScreen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.mainScreen.presenter.MainScreenPresenter;
 
-/**
- * Created by Evronot on 23.06.2016.
- */
+
 public class ProfilePresenter implements IProfileScreen.IPresenter {
     IMainScreen.IPresenter mainPresenter;
     IProfileScreen.IProfileView view;
@@ -36,5 +34,10 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
         }else {
             view.showGuest();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        view = null;
     }
 }

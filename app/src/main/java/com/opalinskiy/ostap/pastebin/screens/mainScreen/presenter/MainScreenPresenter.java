@@ -23,7 +23,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     private IDataInteractor model;
     private String login;
     private String password;
-    // TODO: try to store fields below somewhere in model
+    // TODO: try to store fields below somewhere in the model
     private User user;
     private String userKey;
     private boolean isRegistered;

@@ -40,6 +40,12 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         View view = inflater.inflate(R.layout.main_screen_fragment, container, false);
         init(view);
         setSpinnerAdapters();
+        setBottomSheetCallback();
+        setHasOptionsMenu(true);
+        return view;
+    }
+
+    private void setBottomSheetCallback() {
         bottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View bottomSheet, int newState) {
@@ -55,13 +61,9 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
             public void onSlide(@NonNull View bottomSheet, float slideOffset) {
             }
         });
-
-        setHasOptionsMenu(true);
-        return view;
     }
 
     private void init(View view) {
-        Log.d(Constants.TAG, "MyPastes onCreateView");
         presenter = new NewPastePresenter(this);
         etCode = (EditText) view.findViewById(R.id.et_code_MSF);
 
@@ -123,12 +125,14 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
 
     @Override
     public void showMessage() {
-        Toast.makeText(getActivity(), "Please, input some code.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.input_some_code, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onDestroy() {
-      //  presenter.onDestroy();
+        if(presenter != null){
+            presenter.onDestroy();
+        }
         super.onDestroy();
     }
 }
