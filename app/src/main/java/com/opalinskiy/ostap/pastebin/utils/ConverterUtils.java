@@ -71,8 +71,6 @@ public  class ConverterUtils {
             Log.d(Constants.TAG, "Error");
         }
 
-     //   Log.d(Constants.TAG, "XML  length");
-
         Gson gson = new Gson();
         Type type = new TypeToken<UserResponse>() {}.getType();
         UserResponse userResponse = gson.fromJson(xmlJSONObj.toString(), type);

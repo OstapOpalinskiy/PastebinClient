@@ -21,8 +21,6 @@ import android.widget.Toast;
 
 import com.opalinskiy.ostap.pastebin.Constants;
 import com.opalinskiy.ostap.pastebin.R;
-import com.opalinskiy.ostap.pastebin.screens.mainScreen.IMainScreen;
-import com.opalinskiy.ostap.pastebin.screens.mainScreen.presenter.MainFragmentPresenter;
 import com.opalinskiy.ostap.pastebin.screens.newPasteScreen.INewPaste;
 import com.opalinskiy.ostap.pastebin.screens.newPasteScreen.presenter.NewPastePresenter;
 
@@ -115,13 +113,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         String syntax = String.valueOf(spinnerSyntax.getSelectedItem());
         String expiration = String.valueOf(spinnerExpiration.getSelectedItem());
         String exposure = String.valueOf(spinnerExposure.getSelectedItem());
-
-        if (!TextUtils.isEmpty(code)) {
-            presenter.onPostPaste(code, pasteName, syntax, expiration, exposure);
-        } else {
-            Toast.makeText(getActivity(), "Please, input some code.", Toast.LENGTH_SHORT).show();
-        }
-
+        presenter.onPostPaste(code, pasteName, syntax, expiration, exposure);
         return super.onOptionsItemSelected(item);
     }
 
@@ -136,7 +128,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
 
     @Override
     public void onDestroy() {
-    //    presenter.onDestroy();
+      //  presenter.onDestroy();
         super.onDestroy();
     }
 }

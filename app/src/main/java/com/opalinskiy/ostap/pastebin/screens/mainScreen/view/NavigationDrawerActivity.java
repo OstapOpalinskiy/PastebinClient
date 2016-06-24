@@ -50,13 +50,12 @@ public class NavigationDrawerActivity extends AppCompatActivity
             NewPasteFragment fragment = new NewPasteFragment();
             commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
         }
-//
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        Log.d(Constants.TAG, "onSaveInstanceState");
-        outState.putSerializable(Constants.LOGIN_KEY, "login");
+//        Log.d(Constants.TAG, "onSaveInstanceState");
+//        outState.putSerializable(Constants.LOGIN_KEY, "login");
         super.onSaveInstanceState(outState);
     }
 
@@ -195,12 +194,4 @@ public class NavigationDrawerActivity extends AppCompatActivity
         return presenter;
     }
 
-    //    @Override
-//    public void setUserKey(String userKey) {
-//        user.setUserKey(userKey);
-//    }
-
-//    public String loadUserKey() {
-//        return userKey;
-//    }
 }

@@ -28,9 +28,7 @@ public interface IMainScreen {
 
         boolean isRegistered();
 
-        void setIsRegistered(boolean isRegistered);
     }
-
 
     interface IView {
         void setUser(User user);
@@ -46,16 +44,4 @@ public interface IMainScreen {
         void onWrongLogin();
 
     }
-
-    interface IViewFragment {
-        void setText(String pasteUrl);
-    }
-
-    interface IPresenterFragment {
-        void onPostPaste(String pasteCode, String name, String syntax, String expiration, String exposure);
-
-        void onDestroy();
-    }
-
-
 }

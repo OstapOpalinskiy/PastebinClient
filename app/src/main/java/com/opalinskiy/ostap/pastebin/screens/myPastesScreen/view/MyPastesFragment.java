@@ -92,7 +92,7 @@ public class MyPastesFragment extends Fragment
 
     @Override
     public void onDestroy() {
-//        presenter.onDestroy();
+      //  presenter.onDestroy();
         super.onDestroy();
     }
 }

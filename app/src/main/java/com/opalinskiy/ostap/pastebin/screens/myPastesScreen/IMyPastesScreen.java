@@ -17,17 +17,10 @@ public interface IMyPastesScreen {
         void onDestroy();
     }
 
-
     interface IView {
         void setUsersList(List<Paste> list);
         void showMessage();
     }
-
-//    interface IViewPasteCode {
-//        void setCode(String title, String code);
-//
-//        void onDeletePaste(String msg);
-//    }
 
     interface IItemClickHandler {
         void onItemClick(String url);

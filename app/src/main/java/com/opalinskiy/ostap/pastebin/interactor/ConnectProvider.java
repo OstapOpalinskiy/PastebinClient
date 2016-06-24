@@ -7,9 +7,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-/**
- * Created by Evronot on 10.06.2016.
- */
+
 public class ConnectProvider {
     private static ConnectProvider instance;
     private final Retrofit retrofit;
@@ -25,7 +23,6 @@ public class ConnectProvider {
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())
                 .build();
-
     }
 
     public static ConnectProvider getInstance() {

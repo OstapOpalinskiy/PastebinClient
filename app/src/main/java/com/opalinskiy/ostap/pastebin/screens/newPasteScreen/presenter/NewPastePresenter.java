@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.newPasteScreen.presenter;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.opalinskiy.ostap.pastebin.Constants;
@@ -37,27 +38,31 @@ public class NewPastePresenter implements INewPaste.IPresenter{
     }
     @Override
     public void onPostPaste(String pasteCode, String name, String syntax, String expiration, String exposure) {
+        if(!TextUtils.isEmpty(pasteCode)){
+            Map<String, String> parameters = new HashMap<>();
+            parameters.put("api_dev_key", Constants.API_DEV_KEY);
+            parameters.put("api_paste_code", pasteCode);
+            parameters.put("api_option", "paste");
+            parameters.put("api_paste_name", name);
+            parameters.put("api_paste_format", syntax);
+            parameters.put("api_paste_expire_date", expirationMap.get(expiration));
+            parameters.put("api_paste_private", exposureMap.get(exposure));
 
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("api_dev_key", Constants.API_DEV_KEY);
-        parameters.put("api_paste_code", pasteCode);
-        parameters.put("api_option", "paste");
-        parameters.put("api_paste_name", name);
-        parameters.put("api_paste_format", syntax);
-        parameters.put("api_paste_expire_date", expirationMap.get(expiration));
-        parameters.put("api_paste_private", exposureMap.get(exposure));
+            model.postPaste(parameters, new OnLoadFinishedListener() {
+                @Override
+                public void onSuccess(Object object) {
+                    view.setText((String)object);
+                }
 
-        model.postPaste(parameters, new OnLoadFinishedListener() {
-            @Override
-            public void onSuccess(Object object) {
-                view.setText((String)object);
-            }
+                @Override
+                public void onFailure(Object object) {
+                    Log.d(Constants.TAG, "onFailure() in onPostPaste()");
+                }
+            });
+        } else {
+            view.showMessage();
+        }
 
-            @Override
-            public void onFailure(Object object) {
-                Log.d(Constants.TAG, "onFailure() in onPostPaste()");
-            }
-        });
     }
 
     @Override

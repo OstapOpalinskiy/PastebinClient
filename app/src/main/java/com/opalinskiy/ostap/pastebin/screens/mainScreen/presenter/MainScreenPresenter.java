@@ -21,15 +21,17 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     private static MainScreenPresenter instance;
     private IMainScreen.IView view;
     private IDataInteractor model;
-    private String userKey;
     private String login;
     private String password;
+    // TODO: try to store fields below somewhere in model
     private User user;
+    private String userKey;
     private boolean isRegistered;
 
     private MainScreenPresenter(final IMainScreen.IView view, SharedPreferences prefs) {
         this.view = view;
         this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+        // default user for testing
         login = prefs.getString(Constants.LOGIN_KEY, "Grib");
         password = prefs.getString(Constants.PASSWORD_KEY, "123456789");
     }
@@ -37,12 +39,14 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     public static MainScreenPresenter getInstance(IMainScreen.IView view, SharedPreferences preferences) {
         if (instance == null) {
             instance = new MainScreenPresenter(view, preferences);
-        }else{
-         instance.setView(view);
+        } else {
+            instance.setView(view);
         }
         return instance;
     }
 
+
+   // to load the user we need to request user key first
     @Override
     public void loadUser(final SharedPreferences prefs, final boolean userChanged) {
 
@@ -76,6 +80,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         });
     }
 
+   // retrieves user key and, if success, calls loadUser()
     @Override
     public void loadUserKey(final SharedPreferences prefs, final boolean userChanged) {
         Map<String, String> parameters = new HashMap<>();
@@ -87,9 +92,9 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             @Override
             public void onSuccess(Object object) {
                 userKey = (String) object;
-                if(userKey.equals(Constants.WRONG_PASSWORD_RESPONSE)){
-                   view.onWrongLogin();
-                }else{
+                if (userKey.equals(Constants.WRONG_PASSWORD_RESPONSE)) {
+                    view.onWrongLogin();
+                } else {
                     Log.d(Constants.TAG, "loadUserKey() onSuccess(), userKey:" + userKey);
                     loadUser(prefs, userChanged);
                 }
@@ -114,9 +119,9 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void setUserInfo(User user) {
-            view.setAvatar(user.getUserAvatarUrl());
-            view.setUserName(user.getUserName());
-            view.setUser(user);
+        view.setAvatar(user.getUserAvatarUrl());
+        view.setUserName(user.getUserName());
+        view.setUser(user);
     }
 
     @Override
@@ -153,13 +158,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         return isRegistered;
     }
 
-
-    @Override
-    public void setIsRegistered(boolean isRegistered) {
-        this.isRegistered = isRegistered;
-    }
-
-    private void setView( IMainScreen.IView view){
+    private void setView(IMainScreen.IView view) {
         this.view = view;
     }
 

@@ -158,6 +158,5 @@ public class DataInteractor implements IDataInteractor {
                          }
                      }
         );
-
     }
 }
