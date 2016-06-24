@@ -58,7 +58,6 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void getMyPastes(String userKey) {
-        Log.d(Constants.TAG, "user key (mu pastes) :" + userKey);
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_user_key", userKey);
@@ -70,13 +69,10 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
                 PasteList pasteList = (PasteList) object;
                 myPastes.addAll(pasteList.getPasteList());
                 view.setUsersList(myPastes);
-                Log.d(Constants.TAG, "List in presenter: " + object.toString());
-
             }
 
             @Override
             public void onFailure(Object object) {
-                Log.d(Constants.TAG, "onFailure in getMyPastes: " + object.toString());
             }
         });
     }

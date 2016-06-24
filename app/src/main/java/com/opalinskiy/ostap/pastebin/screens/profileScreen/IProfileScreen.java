@@ -4,9 +4,7 @@ import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 
-/**
- * Created by Evronot on 15.06.2016.
- */
+
 public interface IProfileScreen {
 
 

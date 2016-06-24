@@ -6,9 +6,7 @@ import com.opalinskiy.ostap.pastebin.screens.loginScreen.ILoginScreen;
 import com.opalinskiy.ostap.pastebin.screens.mainScreen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.mainScreen.presenter.MainScreenPresenter;
 
-/**
- * Created by Evronot on 23.06.2016.
- */
+
 public class LoginPresenter implements ILoginScreen.IPresenter {
     IMainScreen.IPresenter mainPresenter;
 

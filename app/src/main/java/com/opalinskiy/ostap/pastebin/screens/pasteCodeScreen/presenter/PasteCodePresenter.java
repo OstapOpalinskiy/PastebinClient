@@ -32,12 +32,12 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
 
             @Override
             public void onSuccess(Object object) {
-                view.setCode("Paste code", object.toString());
+                view.setCode(object.toString());
             }
 
             @Override
             public void onFailure(Object object) {
-                view.setCode("No title", "Couldn't get code");
+                view.setCode("Can't get code");
             }
         });
     }

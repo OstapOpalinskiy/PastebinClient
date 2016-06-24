@@ -12,7 +12,7 @@ public interface IPasteCodeScreen {
     }
 
     interface IView {
-        void setCode(String title, String code);
+        void setCode(String code);
 
         void onDeletePaste(String msg);
     }

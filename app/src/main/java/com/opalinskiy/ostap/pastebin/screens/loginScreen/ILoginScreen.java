@@ -13,7 +13,5 @@ public interface ILoginScreen {
         void onLogin(String login, String password, SharedPreferences preferences);
     }
 
-    interface ILoginView {
-
-    }
+    interface ILoginView {}
 }

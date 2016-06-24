@@ -65,7 +65,7 @@ public class MyPastesFragment extends Fragment
 
     @Override
     public void showMessage() {
-        Toast.makeText(getActivity(), "You need to login first.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.you_need_login, Toast.LENGTH_SHORT).show();
     }
 
     private void setDataToRecyclerView(List<Paste> myPastes) {
@@ -75,7 +75,7 @@ public class MyPastesFragment extends Fragment
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(linearLayoutManager);
         } else {
-            Toast.makeText(getActivity(), "No pastes yet.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_pastes_yet, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -92,7 +92,9 @@ public class MyPastesFragment extends Fragment
 
     @Override
     public void onDestroy() {
-        presenter.onDestroy();
+        if(presenter != null){
+            presenter.onDestroy();
+        }
         super.onDestroy();
     }
 }

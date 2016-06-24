@@ -27,22 +27,26 @@ public class LoginFragment extends Fragment implements ILoginScreen.ILoginView {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.login_fragment, container, false);
-        etLogin = (EditText) view.findViewById(R.id.et_login_FL);
-        etPassword = (EditText) view.findViewById(R.id.et_password_FL);
-        tvLogin = (TextView) view.findViewById(R.id.tv_login_FL);
+        initViews(view);
+
         final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         presenter =new LoginPresenter((IMainScreen.IView)getActivity(), prefs);
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(Constants.TAG, "Login click!");
                 String login = String.valueOf(etLogin.getText());
                 String password = String.valueOf(etPassword.getText());
                 presenter.onLogin(login, password, prefs);
             }
         });
         return view;
+    }
+
+    private void initViews(View view) {
+        etLogin = (EditText) view.findViewById(R.id.et_login_FL);
+        etPassword = (EditText) view.findViewById(R.id.et_password_FL);
+        tvLogin = (TextView) view.findViewById(R.id.tv_login_FL);
     }
 
     @Override

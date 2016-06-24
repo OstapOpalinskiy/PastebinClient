@@ -21,9 +21,7 @@ import java.util.Scanner;
 import okhttp3.ResponseBody;
 import retrofit2.Response;
 
-/**
- * Created by Evronot on 10.06.2016.
- */
+
 public  class ConverterUtils {
 
     public  PasteList responseBodyToPasteList(Response<ResponseBody> response){
@@ -43,13 +41,11 @@ public  class ConverterUtils {
         PasteList pasteList = null;
         try{
             Type type = new TypeToken<PasteList>() {}.getType();
-            Log.d(Constants.TAG, "Json:" + xmlJSONObj.toString());
             pasteList = gson.fromJson(xmlJSONObj.toString(), type);
         }catch (Exception e){
             e.printStackTrace();
             Type type = new TypeToken<Paste>() {}.getType();
             String jsonString = xmlJSONObj.toString().substring(9, xmlJSONObj.toString().length() - 1);
-            Log.d(Constants.TAG, "Json in exception:" + jsonString);
             Paste paste = gson.fromJson(jsonString, type);
             pasteList = new PasteList();
             pasteList.addPaste(paste);

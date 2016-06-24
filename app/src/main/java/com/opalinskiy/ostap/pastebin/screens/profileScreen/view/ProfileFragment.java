@@ -34,7 +34,6 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
-        Log.d(Constants.TAG, "onCreateViewFragment");
         initViews(view);
 
         final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
@@ -95,7 +94,9 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
 
     @Override
     public void onDestroy() {
-        presenter.onDestroy();
+        if(presenter != null){
+            presenter.onDestroy();
+        }
         super.onDestroy();
     }
 }

@@ -61,7 +61,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
     }
 
     @Override
-    public void setCode(String title, String code) {
+    public void setCode(String code) {
         getActivity().setTitle(getResources().getString(R.string.paste_code));
         tvCode.setText(code);
     }
@@ -73,7 +73,9 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
 
     @Override
     public void onDestroy() {
-        presenter.onDestroy();
+        if(presenter != null){
+            presenter.onDestroy();
+        }
         super.onDestroy();
     }
 }

@@ -17,7 +17,6 @@ public class Constants {
     public static final String BASE_URL = "http://pastebin.com/";
     public static final String TAG = "LOG_TAG";
     public static final String API_DEV_KEY = "981f58fade8b3563ce798ce60b2dbcfd";
-    public static final String API_USER_KEY = "b0c4a689c51e063297f67d7a516dc66d";
     public static final String MAIN_SCREEN_FRAGMENT_TAG = "fragment main";
     public static final String MY_PASTES_FRAGMENT_TAG = "fragment my pastes";
     public static final String URL_KEY = "url key" ;

@@ -46,7 +46,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     }
 
 
-   // to load the user we need to request user key first
+    // to load the user we need to request user key first
     @Override
     public void loadUser(final SharedPreferences prefs, final boolean userChanged) {
 
@@ -80,7 +80,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         });
     }
 
-   // retrieves user key and, if success, calls loadUser()
+    // retrieves user key and, if success, calls loadUser()
     @Override
     public void loadUserKey(final SharedPreferences prefs, final boolean userChanged) {
         Map<String, String> parameters = new HashMap<>();
@@ -149,7 +149,6 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         }
         this.login = prefs.getString(Constants.LOGIN_KEY, null);
         this.password = prefs.getString(Constants.PASSWORD_KEY, null);
-        Log.d(Constants.TAG, "onLogin() " + "login " + login + "password " + password);
         loadUserKey(prefs, true);
     }
 

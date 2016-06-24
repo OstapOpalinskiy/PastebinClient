@@ -115,7 +115,6 @@ public class NavigationDrawerActivity extends AppCompatActivity
         } else if (id == R.id.nav_log_in) {
             LoginFragment fragment = new LoginFragment();
             commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, true);
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
