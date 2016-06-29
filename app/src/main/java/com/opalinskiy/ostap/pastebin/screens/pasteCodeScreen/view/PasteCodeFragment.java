@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.pasteCodeScreen.view;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import com.opalinskiy.ostap.pastebin.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
+import com.opalinskiy.ostap.pastebin.screens.loginScreen.presenter.LoginPresenter;
+import com.opalinskiy.ostap.pastebin.screens.mainScreen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.mainScreen.view.NavigationDrawerActivity;
 import com.opalinskiy.ostap.pastebin.screens.pasteCodeScreen.IPasteCodeScreen;
 import com.opalinskiy.ostap.pastebin.screens.pasteCodeScreen.presenter.PasteCodePresenter;
@@ -22,14 +25,14 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
     private TextView tvCode;
     private IPasteCodeScreen.IPresenter presenter;
     private String url;
-    private String userKey;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.paste_code_fragment, container, false);
         tvCode = (TextView) view.findViewById(R.id.tv_code_PCF);
-        presenter = new PasteCodePresenter(this);
+        final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
+        presenter = new PasteCodePresenter((IMainScreen.IView)getActivity(),this, prefs);
         url = getArguments().getString(Constants.URL_KEY);
         int myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
         if (myOrTrending == Constants.MY_PASTES) {
@@ -41,8 +44,6 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
 
     @Override
     public void onResume() {
-        User user = ((NavigationDrawerActivity)getActivity()).getUser();
-        userKey = user.getUserKey();
         getActivity().setTitle(getResources().getString(R.string.paste_code));
         super.onResume();
     }
@@ -55,8 +56,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        presenter.deletePaste(url, userKey);
-        getActivity().getSupportFragmentManager().popBackStack();
+        presenter.deletePaste(url);
         return super.onOptionsItemSelected(item);
     }
 
@@ -68,7 +68,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
 
     @Override
     public void onDeletePaste(String s) {
-
+        getActivity().getSupportFragmentManager().popBackStack();
     }
 
     @Override

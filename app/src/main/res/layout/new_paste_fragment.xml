@@ -16,6 +16,7 @@
             android:layout_height="wrap_content"
             android:text="Type code here:"
             android:textSize="20dp"
+            android:paddingLeft="10dp"
             android:textStyle="bold" />
 
         <TextView
@@ -24,17 +25,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_headline_MSF"
             android:textSize="20dp"
+            android:paddingLeft="10dp"
             android:textColor="@android:color/holo_blue_light"
             android:clickable="true"
             android:textStyle="bold" />
 
 
         <EditText
+            android:padding="10dp"
             android:id="@+id/et_code_MSF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/tv_link_MSF"
-            android:background="@android:color/transparent"
+            android:background="@drawable/code_frame"
+            android:layout_margin="10dp"
             android:gravity="top" />
    </RelativeLayout>
 

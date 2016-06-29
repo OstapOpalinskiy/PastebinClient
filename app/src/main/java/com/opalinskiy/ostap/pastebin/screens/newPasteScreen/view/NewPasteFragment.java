@@ -88,7 +88,6 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
             @Override
             public void onClick(View v) {
                 String url = tvLink.getText().toString();
-                Log.d("TAG", "Intent Url: " + url);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 presenter.openLink(getActivity(), intent);
 
@@ -104,17 +103,17 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
 
     private void setSpinnerAdapters() {
         ArrayAdapter<?> adapterSyntax =
-                ArrayAdapter.createFromResource(getActivity(), R.array.syntax, android.R.layout.simple_spinner_item);
+                ArrayAdapter.createFromResource(getActivity(), R.array.syntax, R.layout.spinner_item);
         adapterSyntax.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSyntax.setAdapter(adapterSyntax);
 
         ArrayAdapter<?> adapterExpiration =
-                ArrayAdapter.createFromResource(getActivity(), R.array.expiration, android.R.layout.simple_spinner_item);
+                ArrayAdapter.createFromResource(getActivity(), R.array.expiration,  R.layout.spinner_item);
         adapterExpiration.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerExpiration.setAdapter(adapterExpiration);
 
         ArrayAdapter<?> adapterExposure =
-                ArrayAdapter.createFromResource(getActivity(), R.array.exposure, android.R.layout.simple_spinner_item);
+                ArrayAdapter.createFromResource(getActivity(), R.array.exposure,  R.layout.spinner_item);
         adapterExposure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerExposure.setAdapter(adapterExposure);
     }
@@ -163,6 +162,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
     public void clearLink() {
         tvHeadLine.setText("Type code here:");
         etCode.setVisibility(View.VISIBLE);
+        etCode.setText("");
         tvLink.setVisibility(View.INVISIBLE);
     }
 

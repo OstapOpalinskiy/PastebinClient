@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.pasteCodeScreen.presenter;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.opalinskiy.ostap.pastebin.Constants;
@@ -7,6 +8,8 @@ import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
+import com.opalinskiy.ostap.pastebin.screens.mainScreen.IMainScreen;
+import com.opalinskiy.ostap.pastebin.screens.mainScreen.presenter.MainScreenPresenter;
 import com.opalinskiy.ostap.pastebin.screens.myPastesScreen.IMyPastesScreen;
 import com.opalinskiy.ostap.pastebin.screens.pasteCodeScreen.IPasteCodeScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
@@ -18,10 +21,12 @@ import java.util.Map;
 public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     private IDataInteractor model;
     private IPasteCodeScreen.IView view;
+    IMainScreen.IPresenter mainPresenter;
 
-    public PasteCodePresenter(IPasteCodeScreen.IView view) {
+    public PasteCodePresenter(IMainScreen.IView mainView, IPasteCodeScreen.IView view, SharedPreferences preferences) {
         this.view = view;
         model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+        mainPresenter = MainScreenPresenter.getInstance(mainView, preferences);
     }
 
     @Override
@@ -43,8 +48,9 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     }
 
     @Override
-    public void deletePaste(String url, String userKey) {
+    public void deletePaste(String url) {
         String pasteKey = url.substring(Constants.BASE_URL.length());
+        String userKey = mainPresenter.getUser().getUserKey();
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_user_key", userKey);
@@ -55,7 +61,7 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
 
             @Override
             public void onSuccess(Object object) {
-                Log.d(Constants.TAG, "Paste deleted!!! " +  object);
+                Log.d(Constants.TAG, "Paste deleted!!! " + object);
                 view.onDeletePaste(object + "");
             }
 
@@ -69,6 +75,7 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
 
     @Override
     public void onDestroy() {
+        Log.d(Constants.TAG, "PasteCode presenter onDestroy() view == null: " + (view == null));
         view = null;
     }
 }
