@@ -1,11 +1,14 @@
 package com.opalinskiy.ostap.pastebin.screens.newPasteScreen.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -17,9 +20,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.opalinskiy.ostap.pastebin.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.screens.newPasteScreen.INewPaste;
 import com.opalinskiy.ostap.pastebin.screens.newPasteScreen.presenter.NewPastePresenter;
@@ -33,11 +36,13 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
     private Spinner spinnerExpiration;
     private Spinner spinnerExposure;
     private EditText etPasteName;
+    private TextView tvLink;
+    private TextView tvHeadLine;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.main_screen_fragment, container, false);
+        View view = inflater.inflate(R.layout.new_paste_fragment, container, false);
         init(view);
         setSpinnerAdapters();
         setBottomSheetCallback();
@@ -76,6 +81,19 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         spinnerExpiration = (Spinner) bottomSheet.findViewById(R.id.spinner_expiration_BS);
         spinnerExposure = (Spinner) bottomSheet.findViewById(R.id.spinner_exposure_BS);
         etPasteName = (EditText) bottomSheet.findViewById(R.id.et_paste_name_BS);
+        tvLink = (TextView) view.findViewById(R.id.tv_link_MSF);
+        tvHeadLine = (TextView) view.findViewById(R.id.tv_headline_MSF);
+
+        tvLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = tvLink.getText().toString();
+                Log.d("TAG", "Intent Url: " + url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                presenter.openLink(getActivity(), intent);
+
+            }
+        });
     }
 
     @Override
@@ -115,13 +133,39 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         String syntax = String.valueOf(spinnerSyntax.getSelectedItem());
         String expiration = String.valueOf(spinnerExpiration.getSelectedItem());
         String exposure = String.valueOf(spinnerExposure.getSelectedItem());
-        presenter.onPostPaste(code, pasteName, syntax, expiration, exposure);
+
+        switch (item.getItemId()) {
+            case R.id.action_post_paste:
+                presenter.onPostPaste(code, pasteName, syntax, expiration, exposure);
+                break;
+            case R.id.action_clear:
+                presenter.onClearLink();
+        }
         return super.onOptionsItemSelected(item);
     }
 
     public void setText(String pasteUrl) {
-        etCode.setText(pasteUrl);
+        showLink(pasteUrl);
     }
+
+    @Override
+    public void showLink(String pasteUrl) {
+        tvHeadLine.setText("Your link:");
+        etCode.setText("");
+        etCode.setVisibility(View.INVISIBLE);
+        tvLink.setVisibility(View.VISIBLE);
+        SpannableString content = new SpannableString(pasteUrl);
+        content.setSpan(new UnderlineSpan(), 0, pasteUrl.length(), 0);
+        tvLink.setText(content);
+    }
+
+    @Override
+    public void clearLink() {
+        tvHeadLine.setText("Type code here:");
+        etCode.setVisibility(View.VISIBLE);
+        tvLink.setVisibility(View.INVISIBLE);
+    }
+
 
     @Override
     public void showMessage() {
@@ -130,7 +174,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
 
     @Override
     public void onDestroy() {
-        if(presenter != null){
+        if (presenter != null) {
             presenter.onDestroy();
         }
         super.onDestroy();

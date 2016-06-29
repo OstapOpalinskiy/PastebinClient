@@ -1,5 +1,8 @@
 package com.opalinskiy.ostap.pastebin.screens.newPasteScreen.presenter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -8,7 +11,6 @@ import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
-import com.opalinskiy.ostap.pastebin.screens.mainScreen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.newPasteScreen.INewPaste;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
@@ -16,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class NewPastePresenter implements INewPaste.IPresenter{
+public class NewPastePresenter implements INewPaste.IPresenter {
     private INewPaste.IView view;
     private IDataInteractor model;
     public static final Map<String, String> expirationMap = new HashMap<>();
@@ -36,9 +38,10 @@ public class NewPastePresenter implements INewPaste.IPresenter{
         exposureMap.put("Unlisted", "1");
         exposureMap.put("Private", "2");
     }
+
     @Override
     public void onPostPaste(String pasteCode, String name, String syntax, String expiration, String exposure) {
-        if(!TextUtils.isEmpty(pasteCode)){
+        if (!TextUtils.isEmpty(pasteCode)) {
             Map<String, String> parameters = new HashMap<>();
             parameters.put("api_dev_key", Constants.API_DEV_KEY);
             parameters.put("api_paste_code", pasteCode);
@@ -51,7 +54,7 @@ public class NewPastePresenter implements INewPaste.IPresenter{
             model.postPaste(parameters, new OnLoadFinishedListener() {
                 @Override
                 public void onSuccess(Object object) {
-                    view.setText((String)object);
+                    view.showLink(object.toString());
                 }
 
                 @Override
@@ -66,8 +69,18 @@ public class NewPastePresenter implements INewPaste.IPresenter{
     }
 
     @Override
+    public void onClearLink() {
+        view.clearLink();
+    }
+
+    @Override
     public void onDestroy() {
         view = null;
+    }
+
+    @Override
+    public void openLink(Context context, Intent intent) {
+        context.startActivity(intent);
     }
 
 }

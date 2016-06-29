@@ -55,5 +55,7 @@
     <string name="input_some_code">Please, input some code.</string>
     <string name="you_need_login">You need to login first.</string>
     <string name="no_pastes_yet">No pastes yet.</string>
+    <string name="action_post_paste">Post paste</string>
+    <string name="action_clear">clear</string>
 </resources>
 

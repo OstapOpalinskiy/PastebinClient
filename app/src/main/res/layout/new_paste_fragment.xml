@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_below="@+id/et_code_MSF">
 
-    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
 
         <TextView
             android:id="@+id/tv_headline_MSF"
@@ -20,11 +18,22 @@
             android:textSize="20dp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_link_MSF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_headline_MSF"
+            android:textSize="20dp"
+            android:textColor="@android:color/holo_blue_light"
+            android:clickable="true"
+            android:textStyle="bold" />
+
+
         <EditText
             android:id="@+id/et_code_MSF"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tv_headline_MSF"
+            android:layout_below="@+id/tv_link_MSF"
             android:background="@android:color/transparent"
             android:gravity="top" />
    </RelativeLayout>
