@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".screens.mainScreen.view.NavigationDrawerActivity"
+            android:name=".screens.main_screen.view.NavigationDrawerActivity"
             android:label="@string/pastebin"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
