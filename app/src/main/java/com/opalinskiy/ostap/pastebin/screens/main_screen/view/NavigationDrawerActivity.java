@@ -16,7 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.view.LoginFragment;

@@ -2,7 +2,7 @@ package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter;
 
 import android.content.SharedPreferences;
 
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;

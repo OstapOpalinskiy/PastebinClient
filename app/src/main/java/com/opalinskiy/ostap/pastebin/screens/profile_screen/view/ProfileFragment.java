@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;

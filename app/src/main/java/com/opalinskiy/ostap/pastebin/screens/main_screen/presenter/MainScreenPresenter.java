@@ -4,7 +4,7 @@ import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;

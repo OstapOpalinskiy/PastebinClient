@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view.PasteCodeFragment;

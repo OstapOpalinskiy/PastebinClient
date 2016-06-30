@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.ILoginScreen;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.presenter.LoginPresenter;

@@ -1,4 +1,4 @@
-package com.opalinskiy.ostap.pastebin;
+package com.opalinskiy.ostap.pastebin.global;
 
 import android.util.Log;
 
