@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     app:behavior_peekHeight="70dp"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    tools:context=".screens.mainScreen.view.NavigationDrawerActivity"
+    tools:context=".screens.main_screen.view.NavigationDrawerActivity"
     tools:showIn="@layout/app_bar_main_screen">
 
     <ImageView

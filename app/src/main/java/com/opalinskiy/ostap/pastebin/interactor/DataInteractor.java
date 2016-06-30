@@ -2,7 +2,7 @@ package com.opalinskiy.ostap.pastebin.interactor;
 
 import android.util.Log;
 
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.opalinskiy.ostap.pastebin.Constants;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
