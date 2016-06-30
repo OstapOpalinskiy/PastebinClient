@@ -12,20 +12,15 @@ public interface IMainScreen {
 
         void loadUserKey(SharedPreferences prefs, boolean userChanged);
 
-//        User getUser();
-
         void onDestroy();
 
         void setUserInfo(User user);
 
         void setData(SharedPreferences prefs);
 
-        void onLogout();
+        void onLogout(SharedPreferences preferences);
 
         void onLogin(String login, String password, SharedPreferences preferences);
-
-        boolean isRegistered();
-
     }
 
     interface IView {

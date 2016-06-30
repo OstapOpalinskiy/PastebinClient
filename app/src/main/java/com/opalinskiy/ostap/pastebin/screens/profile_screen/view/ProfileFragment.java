@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         initViews(view);
-        presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity(), prefs);
+        presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity());
         prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +72,7 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
 
     @Override
     public void showGuest() {
-        avatar.setImageDrawable(getResources().getDrawable(R.drawable.guest_green));
+        avatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.guest_green));
         tvName.setText(R.string.guest);
         tvEmail.setText(R.string.no_data);
         tvLocation.setText(R.string.no_data);

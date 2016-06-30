@@ -10,8 +10,8 @@ import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPre
 public class LoginPresenter implements ILoginScreen.IPresenter {
     IMainScreen.IPresenter mainPresenter;
 
-    public LoginPresenter(IMainScreen.IView view, SharedPreferences preferences) {
-        mainPresenter = MainScreenPresenter.getInstance(view, preferences);
+    public LoginPresenter(IMainScreen.IView view) {
+        mainPresenter = MainScreenPresenter.getInstance(view);
     }
 
     @Override

@@ -21,25 +21,21 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     private static MainScreenPresenter instance;
     private IMainScreen.IView view;
     private IDataInteractor model;
-    // TODO: try to store fields below somewhere in the model or SharPref
-    private User user;
-    private boolean isRegistered;
 
-    private MainScreenPresenter(final IMainScreen.IView view, SharedPreferences prefs) {
+    private MainScreenPresenter(final IMainScreen.IView view) {
         this.view = view;
         this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
     }
 
-    public static MainScreenPresenter getInstance(IMainScreen.IView view, SharedPreferences preferences) {
+    public static MainScreenPresenter getInstance(IMainScreen.IView view) {
         if (instance == null) {
-            instance = new MainScreenPresenter(view, preferences);
+            instance = new MainScreenPresenter(view);
         } else {
             instance.setView(view);
         }
         return instance;
     }
 
-    // to load the user we need to request user key first
     @Override
     public void loadUser(final SharedPreferences prefs, final boolean userChanged) {
 
@@ -54,11 +50,8 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             @Override
             public void onSuccess(Object object) {
                 Log.d(Constants.TAG, "loadUser() onSuccess():  " + object);
-                user = (User) object;
+                User user = (User) object;
                 if (user != null) {
-                  //  user.setUserKey(userKey);
-                    isRegistered = true;
-                    Log.d(Constants.TAG, "loadUser()  isRegistered: " + isRegistered);
                     setUserInfo(user);
                 }
                 if (userChanged) {
@@ -75,7 +68,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         });
     }
 
-    // retrieves user key and, if success, calls loadUser()
+
     @Override
     public void loadUserKey(final SharedPreferences prefs, final boolean userChanged) {
         String login = prefs.getString(Constants.LOGIN_KEY, "Grib");
@@ -133,9 +126,11 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     }
 
     @Override
-    public void onLogout() {
+    public void onLogout(SharedPreferences prefs) {
         view.setLoginScreen();
-        isRegistered = false;
+        SharedPreferences.Editor ed = prefs.edit();
+        ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
+
     }
 
     @Override
@@ -151,10 +146,6 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         loadUserKey(prefs, true);
     }
 
-    @Override
-    public boolean isRegistered() {
-        return isRegistered;
-    }
 
     private void setView(IMainScreen.IView view) {
         this.view = view;

@@ -8,8 +8,6 @@ import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.IPasteCodeScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 

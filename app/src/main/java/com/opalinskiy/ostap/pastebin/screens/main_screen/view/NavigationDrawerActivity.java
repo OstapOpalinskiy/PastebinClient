@@ -52,7 +52,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
     protected void init() {
         preferences = getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = MainScreenPresenter.getInstance(this, preferences);
+        presenter = MainScreenPresenter.getInstance(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

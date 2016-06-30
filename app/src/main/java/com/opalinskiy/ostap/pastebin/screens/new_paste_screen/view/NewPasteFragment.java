@@ -37,6 +37,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
     private EditText etPasteName;
     private TextView tvLink;
     private TextView tvHeadLine;
+    //TODO: save state after config change
 
     @Nullable
     @Override
@@ -148,7 +149,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
 
     @Override
     public void showLink(String pasteUrl) {
-        tvHeadLine.setText("Your link:");
+        tvHeadLine.setText(R.string.your_link);
         etCode.setText("");
         etCode.setVisibility(View.INVISIBLE);
         tvLink.setVisibility(View.VISIBLE);
@@ -159,7 +160,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
 
     @Override
     public void clearLink() {
-        tvHeadLine.setText("Type code here:");
+        tvHeadLine.setText(R.string.type_code_here);
         etCode.setVisibility(View.VISIBLE);
         etCode.setText("");
         tvLink.setVisibility(View.INVISIBLE);

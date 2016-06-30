@@ -4,12 +4,11 @@ import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
+import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
-import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
@@ -29,9 +28,9 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
 
     public MyPastesPresenter(IMyPastesScreen.IView view
-            , IMainScreen.IView mainView, int myOrTrending, SharedPreferences preferences) {
+            , IMainScreen.IView mainView, int myOrTrending) {
         this.view = view;
-        mainPresenter = MainScreenPresenter.getInstance(mainView, preferences);
+        mainPresenter = MainScreenPresenter.getInstance(mainView);
         model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.myOrTrending = myOrTrending;
     }
@@ -45,13 +44,12 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             if (isRegistered) {
                 getMyPastes(userKey);
             } else {
-                mainPresenter.onLogout();
+                mainPresenter.onLogout(prefs);
                 view.showMessage();
             }
         } else {
             getTrends();
         }
-
     }
 
     @Override

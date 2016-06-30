@@ -3,9 +3,7 @@ package com.opalinskiy.ostap.pastebin.screens.new_paste_screen;
 import android.content.Context;
 import android.content.Intent;
 
-/**
- * Created by Evronot on 10.06.2016.
- */
+
 public interface INewPaste {
 
     interface IView{
