@@ -26,6 +26,7 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     private TextView tvLogOut;
     private CircleImageView avatar;
     private IProfileScreen.IPresenter presenter;
+    private SharedPreferences prefs;
 
 
     @Nullable
@@ -33,9 +34,8 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         initViews(view);
-
-        final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity(), prefs);
+        prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +47,7 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
 
     @Override
     public void onResume() {
-        presenter.loadData();
+        presenter.loadData(prefs);
         getActivity().setTitle(getResources().getString(R.string.profile));
         super.onResume();
     }

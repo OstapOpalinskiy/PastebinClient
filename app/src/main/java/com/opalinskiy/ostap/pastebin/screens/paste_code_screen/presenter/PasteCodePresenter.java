@@ -20,12 +20,11 @@ import java.util.Map;
 public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     private IDataInteractor model;
     private IPasteCodeScreen.IView view;
-    IMainScreen.IPresenter mainPresenter;
 
-    public PasteCodePresenter(IMainScreen.IView mainView, IPasteCodeScreen.IView view, SharedPreferences preferences) {
+
+    public PasteCodePresenter(IPasteCodeScreen.IView view) {
         this.view = view;
         model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
-        mainPresenter = MainScreenPresenter.getInstance(mainView, preferences);
     }
 
     @Override
@@ -47,12 +46,12 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     }
 
     @Override
-    public void deletePaste(String url) {
+    public void deletePaste(String url, SharedPreferences preferences) {
         String pasteKey = url.substring(Constants.BASE_URL.length());
-       // String userKey = mainPresenter.getUser().getUserKey();
+        String userKey = preferences.getString(Constants.USER_KEY_TAG, "");
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
-       // parameters.put("api_user_key", userKey);
+        parameters.put("api_user_key", userKey);
         parameters.put("api_option", "delete");
         parameters.put("api_paste_key", pasteKey);
 

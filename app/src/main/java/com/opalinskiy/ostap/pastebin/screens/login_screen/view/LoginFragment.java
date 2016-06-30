@@ -37,6 +37,7 @@ public class LoginFragment extends Fragment implements ILoginScreen.ILoginView {
                 String login = String.valueOf(etLogin.getText());
                 String password = String.valueOf(etPassword.getText());
                 presenter.onLogin(login, password, prefs);
+
             }
         });
         return view;

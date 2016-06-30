@@ -67,7 +67,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
                 Log.d(Constants.TAG, "Drawer opened!!!");
-                presenter.setData(preferences);
+               // presenter.setData(preferences);
                 //TODO: load user avatar and user name here
             }
         };

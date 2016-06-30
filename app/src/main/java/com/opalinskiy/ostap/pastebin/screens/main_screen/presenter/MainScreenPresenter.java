@@ -21,19 +21,13 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     private static MainScreenPresenter instance;
     private IMainScreen.IView view;
     private IDataInteractor model;
-    //    private String login;
-//    private String password;
     // TODO: try to store fields below somewhere in the model or SharPref
     private User user;
-  //  private String userKey;
     private boolean isRegistered;
 
     private MainScreenPresenter(final IMainScreen.IView view, SharedPreferences prefs) {
         this.view = view;
         this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
-        // default user for testing
-//        login = prefs.getString(Constants.LOGIN_KEY, "Grib");
-//        password = prefs.getString(Constants.PASSWORD_KEY, "123456789");
     }
 
     public static MainScreenPresenter getInstance(IMainScreen.IView view, SharedPreferences preferences) {
@@ -115,11 +109,6 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         });
     }
 
-//    @Override
-//    public User getUser() {
-//        return user;
-//    }
-
     @Override
     public void onDestroy() {
         view = null;
@@ -133,11 +122,14 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void setData(SharedPreferences prefs) {
-//        if (user != null) {
-//            setUserInfo(user);
-//        } else {
+        String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
+        Log.d(Constants.TAG, "setData(), user key:" + userKey);
+        Log.d(Constants.TAG, "setData(), user name:" + prefs.getString(Constants.LOGIN_KEY, ""));
+        if(TextUtils.isEmpty(userKey)){
             loadUserKey(prefs, false);
-//        }
+        }else {
+            loadUser(prefs, false);
+        }
     }
 
     @Override
@@ -152,10 +144,10 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             SharedPreferences.Editor ed = prefs.edit();
             ed.putString(Constants.LOGIN_KEY, login);
             ed.putString(Constants.PASSWORD_KEY, password);
+            ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
             ed.apply();
         }
-//        this.login = prefs.getString(Constants.LOGIN_KEY, null);
-//        this.password = prefs.getString(Constants.PASSWORD_KEY, null);
+
         loadUserKey(prefs, true);
     }
 

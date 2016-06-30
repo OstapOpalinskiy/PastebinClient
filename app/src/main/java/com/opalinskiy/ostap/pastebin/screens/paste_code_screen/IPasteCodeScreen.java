@@ -1,12 +1,14 @@
 package com.opalinskiy.ostap.pastebin.screens.paste_code_screen;
 
 
+import android.content.SharedPreferences;
+
 public interface IPasteCodeScreen {
 
     interface IPresenter {
         void getCode(String url);
 
-        void deletePaste(String url);
+        void deletePaste(String url, SharedPreferences preferences);
 
         void onDestroy();
     }

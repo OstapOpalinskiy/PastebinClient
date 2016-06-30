@@ -38,17 +38,17 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
 
     @Override
-    public void showMyPastes() {
-       // User user = mainPresenter.getUser();
-        boolean isRegistered = mainPresenter.isRegistered();
-        if(myOrTrending == Constants.MY_PASTES){
+    public void showMyPastes(SharedPreferences prefs) {
+        String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
+        boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
+        if (myOrTrending == Constants.MY_PASTES) {
             if (isRegistered) {
-           //     getMyPastes(user.getUserKey());
+                getMyPastes(userKey);
             } else {
                 mainPresenter.onLogout();
                 view.showMessage();
             }
-        }else{
+        } else {
             getTrends();
         }
 

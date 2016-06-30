@@ -29,6 +29,7 @@ public class MyPastesFragment extends Fragment
     private List<Paste> pasteList;
     private RecyclerView recyclerView;
     private int myOrTrending;
+    private SharedPreferences prefs;
 
     @Nullable
     @Override
@@ -36,14 +37,14 @@ public class MyPastesFragment extends Fragment
             , @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_pastes_fragment, container, false);
         init(view);
-        presenter.showMyPastes();
+        presenter.showMyPastes(prefs);
         return view;
     }
 
     private void init(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_MPF);
         myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
-        final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
+        prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         presenter = new MyPastesPresenter(this, ((IMainScreen.IView) getActivity()), myOrTrending, prefs);
     }
 
@@ -92,7 +93,7 @@ public class MyPastesFragment extends Fragment
 
     @Override
     public void onDestroy() {
-        if(presenter != null){
+        if (presenter != null) {
             presenter.onDestroy();
         }
         super.onDestroy();

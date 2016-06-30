@@ -1,5 +1,7 @@
 package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen;
 
+import android.content.SharedPreferences;
+
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 
 import java.util.List;
@@ -12,7 +14,7 @@ public interface IMyPastesScreen {
 
         void getTrends();
 
-        void showMyPastes();
+        void showMyPastes(SharedPreferences prefs);
 
         void onDestroy();
     }
