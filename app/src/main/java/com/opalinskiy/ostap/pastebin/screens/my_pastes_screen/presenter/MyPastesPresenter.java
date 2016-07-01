@@ -35,11 +35,10 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
         this.myOrTrending = myOrTrending;
     }
 
-
     @Override
     public void showMyPastes(SharedPreferences prefs) {
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
-        boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
+        boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, true);
         if (myOrTrending == Constants.MY_PASTES) {
             if (isRegistered) {
                 getMyPastes(userKey);

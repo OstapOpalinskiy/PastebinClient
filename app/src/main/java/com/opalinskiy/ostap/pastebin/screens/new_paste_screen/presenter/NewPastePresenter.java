@@ -2,6 +2,7 @@ package com.opalinskiy.ostap.pastebin.screens.new_paste_screen.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -39,6 +40,17 @@ public class NewPastePresenter implements INewPaste.IPresenter {
     }
 
     @Override
+    public void restoreState(Bundle bundle) {
+        if(bundle != null){
+            Log.d(Constants.TAG, "in presenter, restore state:" + bundle.getBoolean(Constants.IS_LINK_SHOWN_KEY));
+            boolean isLinkShown = bundle.getBoolean(Constants.IS_LINK_SHOWN_KEY);
+            if(isLinkShown){
+                view.showLink(bundle.getString(Constants.LINK_KEY));
+            }
+        }
+    }
+
+    @Override
     public void onPostPaste(String pasteCode, String name, String syntax, String expiration, String exposure) {
         if (!TextUtils.isEmpty(pasteCode)) {
             Map<String, String> parameters = new HashMap<>();
@@ -54,6 +66,7 @@ public class NewPastePresenter implements INewPaste.IPresenter {
                 @Override
                 public void onSuccess(Object object) {
                     view.showLink(object.toString());
+                    Log.d(Constants.TAG, "after show link");
                 }
 
                 @Override
@@ -64,7 +77,6 @@ public class NewPastePresenter implements INewPaste.IPresenter {
         } else {
             view.showMessage();
         }
-
     }
 
     @Override

@@ -30,4 +30,6 @@ public class Constants {
     public static final String WRONG_LOGIN_RESPONSE = "Bad API request, invalid login" ;
     public static final String PASTE_LIMIT_REACHED = "Post limit, maximum pastes per 24h reached" ;
     public static final String WRONG_PASSWORD_RESPONSE = "Bad API request, invalid login" ;
+    public static final String IS_LINK_SHOWN_KEY = "is link shown";
+    public static final String LINK_KEY = "link";
 }
