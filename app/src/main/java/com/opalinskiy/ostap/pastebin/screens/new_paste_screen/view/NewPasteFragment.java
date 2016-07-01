@@ -52,7 +52,6 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         setBottomSheetCallback();
         setHasOptionsMenu(true);
         setRetainInstance(true);
-        Log.d(Constants.TAG, "!!!!!!!!!!!!!!!!!!!!in onCreate(), isLinkShown: ");
         presenter.restoreState(savedInstanceState);
         return view;
     }
@@ -60,7 +59,6 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);
-        Log.d(Constants.TAG, "save Instance state, isLinkShown: " + isLinkShown);
         outState.putString(Constants.LINK_KEY, tvLink.getText().toString());
         super.onSaveInstanceState(outState);
     }

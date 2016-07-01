@@ -42,7 +42,6 @@ public class NewPastePresenter implements INewPaste.IPresenter {
     @Override
     public void restoreState(Bundle bundle) {
         if(bundle != null){
-            Log.d(Constants.TAG, "in presenter, restore state:" + bundle.getBoolean(Constants.IS_LINK_SHOWN_KEY));
             boolean isLinkShown = bundle.getBoolean(Constants.IS_LINK_SHOWN_KEY);
             if(isLinkShown){
                 view.showLink(bundle.getString(Constants.LINK_KEY));
