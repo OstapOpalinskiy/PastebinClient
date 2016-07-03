@@ -71,8 +71,8 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void loadUserKey(final SharedPreferences prefs, final boolean userChanged) {
-        String login = prefs.getString(Constants.LOGIN_KEY, "Grib");
-        String password = prefs.getString(Constants.PASSWORD_KEY, "123456789");
+        String login = prefs.getString(Constants.LOGIN_KEY, "");
+        String password = prefs.getString(Constants.PASSWORD_KEY, "");
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
@@ -115,10 +115,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void setData(SharedPreferences prefs) {
-//        if(!prefs.contains(Constants.IS_REGISTERED_KEY)){
-//            SharedPreferences.Editor ed = prefs.edit();
-//            ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
-//        }
+
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
         Log.d(Constants.TAG, "setData(), user key:" + userKey);
         Log.d(Constants.TAG, "setData(), user name:" + prefs.getString(Constants.LOGIN_KEY, ""));
