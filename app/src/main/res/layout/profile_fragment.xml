@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Name:" />
+                android:text="@string/name" />
 
             <TextView
                 android:id="@+id/tv_name_PF"
@@ -61,15 +61,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Email:" />
+                android:text="@string/email" />
 
             <TextView
                 android:id="@+id/tv_email_PF"
                 style="@style/tvProfileStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                tools:text="Email" />
+                android:layout_weight="2" />
 
         </LinearLayout>
 
@@ -85,15 +84,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Location:" />
+                android:text="@string/location" />
 
             <TextView
                 android:id="@+id/tv_location_PF"
                 style="@style/tvProfileStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
-                tools:text="Location" />
+                android:layout_weight="2" />
         </LinearLayout>
 
         <LinearLayout
@@ -110,7 +108,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:clickable="true"
-        android:text="Logout"
+        android:text="@string/logout"
         android:textColor="@color/colorPrimary" />
 
 </LinearLayout>

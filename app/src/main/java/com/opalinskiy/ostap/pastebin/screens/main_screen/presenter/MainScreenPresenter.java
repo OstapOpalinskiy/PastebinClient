@@ -115,6 +115,10 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void setData(SharedPreferences prefs) {
+//        if(!prefs.contains(Constants.IS_REGISTERED_KEY)){
+//            SharedPreferences.Editor ed = prefs.edit();
+//            ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
+//        }
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
         Log.d(Constants.TAG, "setData(), user key:" + userKey);
         Log.d(Constants.TAG, "setData(), user name:" + prefs.getString(Constants.LOGIN_KEY, ""));
@@ -129,7 +133,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     public void onLogout(SharedPreferences prefs) {
         view.setLoginScreen();
         SharedPreferences.Editor ed = prefs.edit();
-        ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
+        ed.putBoolean(Constants.IS_REGISTERED_KEY, false);
 
     }
 

@@ -67,6 +67,7 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
     @Override
     public void loadData(SharedPreferences prefs) {
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
+        Log.d(Constants.TAG, "is Registered:  in profile:" + isRegistered);
         if (isRegistered) {
             loadUser(prefs);
         } else {

@@ -74,8 +74,6 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     public void showGuest() {
         avatar.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.guest_green));
         tvName.setText(R.string.guest);
-        tvEmail.setText(R.string.no_data);
-        tvLocation.setText(R.string.no_data);
 
         tvEmail.setVisibility(View.INVISIBLE);
         tvLocation.setVisibility(View.INVISIBLE);

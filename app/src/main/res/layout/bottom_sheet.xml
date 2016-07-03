@@ -16,8 +16,7 @@
         android:layout_height="70dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/arrow_up"
-        android:text="Hello bottom sheet" />
+        android:background="@drawable/arrow_up" />
 
 
     <LinearLayout
@@ -32,7 +31,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Syntax highlight:"
+            android:text="@string/syntax_highlight"
             style="@style/textViewBSheetStyle" />
 
         <Spinner
@@ -54,7 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Paste expiration:"
+            android:text="@string/paste_expiration"
             style="@style/textViewBSheetStyle" />
 
         <Spinner
@@ -76,7 +75,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Paste exposure:"
+            android:text="@string/paste_exposure"
             style="@style/textViewBSheetStyle" />
 
         <Spinner
@@ -91,23 +90,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_exposure_BS"
-        android:weightSum="3"
         style="@style/bottomSheetLayoutStyle">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Paste name:"
-            style="@style/textViewBSheetStyle" />
-
         <EditText
+            android:hint="@string/paste_name"
+            android:textColorHint="@android:color/white"
             android:id="@+id/et_paste_name_BS"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/BottomSheetSpinnerTextStyle"
-            android:layout_weight="2"
-            android:layout_below="@+id/ll_exposure_BS" />
+            style="@style/BottomSheetSpinnerTextStyle" />
     </LinearLayout>
 
 </RelativeLayout>
