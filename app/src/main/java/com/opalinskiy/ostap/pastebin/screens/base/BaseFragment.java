@@ -11,6 +11,7 @@ public class BaseFragment extends Fragment implements IBaseFragment {
     @Override
     public void startProgress(String title, String msg) {
         ringProgress = ProgressDialog.show(getActivity(), title, msg);
+        ringProgress.setCancelable(true);
     }
 
     @Override

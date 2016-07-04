@@ -34,7 +34,6 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void showMyPastes(SharedPreferences prefs) {
-        view.startProgress("Please wait...", "Pastes is loading.");
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
         if (myOrTrending == Constants.MY_PASTES) {
@@ -50,6 +49,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void getMyPastes(String userKey) {
+        view.startProgress("Please wait...", "Pastes is loading.");
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_user_key", userKey);
@@ -73,11 +73,11 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void getTrends() {
+        view.startProgress("Please wait...", "Pastes is loading.");
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_option", "trends");
         final List<Paste> myPastes = new LinkedList<>();
-
         model.getListOfTrendingPastes(parameters, new OnLoadFinishedListener() {
 
             @Override

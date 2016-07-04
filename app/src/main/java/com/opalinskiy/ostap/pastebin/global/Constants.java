@@ -5,9 +5,7 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Evronot on 08.06.2016.
- */
+
 public class Constants {
     public static final String SAVE_USER_KEY = "save user";
     public static final String LOGIN_KEY = "login key";
