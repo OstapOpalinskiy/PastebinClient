@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.view;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +28,7 @@ public class MyPastesFragment extends Fragment
     private RecyclerView recyclerView;
     private int myOrTrending;
     private SharedPreferences prefs;
+    private ProgressDialog ringProgress;
 
     @Nullable
     @Override
@@ -85,6 +87,17 @@ public class MyPastesFragment extends Fragment
         fragment.setArguments(args);
         ((NavigationDrawerActivity) getActivity()).commitFragment(fragment
                 , Constants.MY_PASTES_CODE_FRAGMENT_TAG, true);
+    }
+
+    @Override
+    public void startProgress() {
+        ringProgress = ProgressDialog.show(getActivity(),
+                getActivity().getString(R.string.please_wait), getActivity().getString(R.string.pastes_loading));
+    }
+
+    @Override
+    public void stopProgress() {
+        ringProgress.cancel();
     }
 
     @Override

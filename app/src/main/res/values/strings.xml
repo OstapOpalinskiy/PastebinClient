@@ -67,5 +67,9 @@
     <string name="name">Name:</string>
     <string name="email">Email:</string>
     <string name="location">Location:</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="paste_code_loading">Paste code is loading.</string>
+    <string name="pastes_loading">Pastes are loading</string>
+    <string name="user_data_loading">User data is loading.</string>
 </resources>
 

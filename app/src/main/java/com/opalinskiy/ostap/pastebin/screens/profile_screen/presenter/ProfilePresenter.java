@@ -36,7 +36,7 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
 
 
     private void loadUser(final SharedPreferences prefs) {
-
+        view.startProgress();
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
 
         Map<String, String> parameters = new HashMap<>();
@@ -54,16 +54,18 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
                     SharedPreferences.Editor ed = prefs.edit();
                     ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
                     ed.apply();
+                    view.stopProgress();
                 }
             }
 
             @Override
             public void onFailure(Object object) {
+                view.stopProgress();
                 Log.d(Constants.TAG, "onFailure: " + object);
             }
         });
     }
-    
+
     @Override
     public void loadData(SharedPreferences prefs) {
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);

@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +22,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
     private TextView tvCode;
     private IPasteCodeScreen.IPresenter presenter;
     private String url;
+    private ProgressDialog ringProgress;
 
     @Nullable
     @Override
@@ -68,8 +70,19 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
     }
 
     @Override
+    public void startProgress() {
+        ringProgress = ProgressDialog.show(getActivity(), 
+                getActivity().getString(R.string.please_wait), getActivity().getString(R.string.paste_code_loading));
+    }
+
+    @Override
+    public void stopProgress() {
+        ringProgress.cancel();
+    }
+
+    @Override
     public void onDestroy() {
-        if(presenter != null){
+        if (presenter != null) {
             presenter.onDestroy();
         }
         super.onDestroy();

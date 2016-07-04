@@ -22,6 +22,8 @@ public interface IMyPastesScreen {
     interface IView {
         void setUsersList(List<Paste> list);
         void showMessage();
+        void startProgress();
+        void stopProgress();
     }
 
     interface IItemClickHandler {

@@ -17,5 +17,9 @@ public interface IPasteCodeScreen {
         void setCode(String code);
 
         void onDeletePaste(String msg);
+
+        void startProgress();
+
+        void stopProgress();
     }
 }

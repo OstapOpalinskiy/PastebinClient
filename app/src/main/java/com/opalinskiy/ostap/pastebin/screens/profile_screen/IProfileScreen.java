@@ -18,5 +18,7 @@ public interface IProfileScreen {
     interface IProfileView {
         void showUser(User user);
         void showGuest();
+        void startProgress();
+        void stopProgress();
     }
 }

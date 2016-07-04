@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.screens.login_screen.ILoginScreen;
+import com.opalinskiy.ostap.pastebin.screens.login_screen.presenter.LoginPresenter;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 
 public class LoginFragment extends Fragment implements ILoginScreen.ILoginView {
@@ -28,7 +29,7 @@ public class LoginFragment extends Fragment implements ILoginScreen.ILoginView {
         initViews(view);
 
         final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-
+        presenter =new LoginPresenter((IMainScreen.IView)getActivity());
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override

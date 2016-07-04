@@ -27,17 +27,20 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
 
     @Override
     public void getCode(String url) {
+        view.startProgress();
         String pasteKey = url.substring(Constants.BASE_URL.length());
 
         model.getRawPasteCode(pasteKey, new OnLoadFinishedListener() {
 
             @Override
             public void onSuccess(Object object) {
+                view.stopProgress();
                 view.setCode(object.toString());
             }
 
             @Override
             public void onFailure(Object object) {
+                view.stopProgress();
                 view.setCode("Can't get code");
             }
         });

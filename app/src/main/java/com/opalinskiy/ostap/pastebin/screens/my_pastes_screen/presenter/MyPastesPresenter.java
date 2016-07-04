@@ -34,6 +34,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void showMyPastes(SharedPreferences prefs) {
+        view.startProgress();
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
         if (myOrTrending == Constants.MY_PASTES) {
@@ -60,10 +61,12 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
                 PasteList pasteList = (PasteList) object;
                 myPastes.addAll(pasteList.getPasteList());
                 view.setUsersList(myPastes);
+                view.stopProgress();
             }
 
             @Override
             public void onFailure(Object object) {
+                view.stopProgress();
             }
         });
     }
@@ -82,11 +85,12 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
                 PasteList pasteList = (PasteList) object;
                 myPastes.addAll(pasteList.getPasteList());
                 view.setUsersList(myPastes);
+                view.stopProgress();
             }
 
             @Override
             public void onFailure(Object object) {
-
+                view.stopProgress();
             }
         });
     }

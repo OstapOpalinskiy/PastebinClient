@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.profile_screen.view;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -28,6 +29,7 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     private CircleImageView avatar;
     private IProfileScreen.IPresenter presenter;
     private SharedPreferences prefs;
+    private ProgressDialog ringProgress;
 
 
     @Nullable
@@ -87,6 +89,17 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
         tvEmail = (TextView) view.findViewById(R.id.tv_email_PF);
         tvLocation = (TextView) view.findViewById(R.id.tv_location_PF);
         tvLogOut = (TextView) view.findViewById(R.id.tv_logout_PF);
+    }
+
+    @Override
+    public void startProgress() {
+        ringProgress = ProgressDialog.show(getActivity(),
+                getActivity().getString(R.string.please_wait), getActivity().getString(R.string.user_data_loading));
+    }
+
+    @Override
+    public void stopProgress() {
+        ringProgress.cancel();
     }
 
     @Override
