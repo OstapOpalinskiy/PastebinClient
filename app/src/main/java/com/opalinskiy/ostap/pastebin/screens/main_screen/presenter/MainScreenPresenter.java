@@ -6,8 +6,8 @@ import android.util.Log;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
+import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
@@ -59,6 +59,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
                 }
                 SharedPreferences.Editor ed = prefs.edit();
                 ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
+                ed.apply();
             }
 
             @Override
@@ -115,22 +116,20 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void setData(SharedPreferences prefs) {
-
-        String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
-        Log.d(Constants.TAG, "setData(), user key:" + userKey);
-        Log.d(Constants.TAG, "setData(), user name:" + prefs.getString(Constants.LOGIN_KEY, ""));
-        if(TextUtils.isEmpty(userKey)){
-            loadUserKey(prefs, false);
-        }else {
+        if(prefs.getBoolean(Constants.IS_REGISTERED_KEY, false)){
             loadUser(prefs, false);
+        } else{
+            view.setGuest();
         }
     }
 
     @Override
     public void onLogout(SharedPreferences prefs) {
+        Log.d(Constants.TAG, "onLogout");
         view.setLoginScreen();
         SharedPreferences.Editor ed = prefs.edit();
         ed.putBoolean(Constants.IS_REGISTERED_KEY, false);
+        ed.apply();
 
     }
 

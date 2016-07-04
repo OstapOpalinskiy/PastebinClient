@@ -35,5 +35,7 @@ public interface IMainScreen {
 
         void onWrongLogin();
 
+        void setGuest();
+
     }
 }

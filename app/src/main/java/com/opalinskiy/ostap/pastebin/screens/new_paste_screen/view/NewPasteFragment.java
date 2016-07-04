@@ -104,7 +104,6 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
                 String url = tvLink.getText().toString();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 presenter.openLink(getActivity(), intent);
-
             }
         });
     }

@@ -24,13 +24,10 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private IDataInteractor model;
     private IMyPastesScreen.IView view;
     private int myOrTrending;
-    private IMainScreen.IPresenter mainPresenter;
 
 
-    public MyPastesPresenter(IMyPastesScreen.IView view
-            , IMainScreen.IView mainView, int myOrTrending) {
+    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
         this.view = view;
-        mainPresenter = MainScreenPresenter.getInstance(mainView);
         model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.myOrTrending = myOrTrending;
     }
@@ -38,12 +35,11 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     @Override
     public void showMyPastes(SharedPreferences prefs) {
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
-        boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, true);
+        boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
         if (myOrTrending == Constants.MY_PASTES) {
             if (isRegistered) {
                 getMyPastes(userKey);
             } else {
-                mainPresenter.onLogout(prefs);
                 view.showMessage();
             }
         } else {

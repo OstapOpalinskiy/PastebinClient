@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.view.NavigationDrawerActivity;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter.MyPastesPresenter;
@@ -43,7 +42,7 @@ public class MyPastesFragment extends Fragment
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_MPF);
         myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
         prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = new MyPastesPresenter(this, ((IMainScreen.IView) getActivity()), myOrTrending);
+        presenter = new MyPastesPresenter(this, myOrTrending);
     }
 
     @Override
