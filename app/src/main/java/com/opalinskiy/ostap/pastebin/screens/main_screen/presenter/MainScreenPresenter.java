@@ -6,8 +6,8 @@ import android.util.Log;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
+import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
@@ -21,34 +21,25 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     private static MainScreenPresenter instance;
     private IMainScreen.IView view;
     private IDataInteractor model;
-    private String login;
-    private String password;
-    // TODO: try to store fields below somewhere in the model or SharPref
-    private User user;
-    private String userKey;
-    private boolean isRegistered;
 
-    private MainScreenPresenter(final IMainScreen.IView view, SharedPreferences prefs) {
+    private MainScreenPresenter(final IMainScreen.IView view) {
         this.view = view;
         this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
-        // default user for testing
-        login = prefs.getString(Constants.LOGIN_KEY, "Grib");
-        password = prefs.getString(Constants.PASSWORD_KEY, "123456789");
     }
 
-    public static MainScreenPresenter getInstance(IMainScreen.IView view, SharedPreferences preferences) {
+    public static MainScreenPresenter getInstance(IMainScreen.IView view) {
         if (instance == null) {
-            instance = new MainScreenPresenter(view, preferences);
+            instance = new MainScreenPresenter(view);
         } else {
             instance.setView(view);
         }
         return instance;
     }
 
-
-    // to load the user we need to request user key first
     @Override
     public void loadUser(final SharedPreferences prefs, final boolean userChanged) {
+
+        String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
@@ -59,11 +50,8 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             @Override
             public void onSuccess(Object object) {
                 Log.d(Constants.TAG, "loadUser() onSuccess():  " + object);
-                user = (User) object;
+                User user = (User) object;
                 if (user != null) {
-                    user.setUserKey(userKey);
-                    isRegistered = true;
-                    Log.d(Constants.TAG, "loadUser()  isRegistered: " + isRegistered);
                     setUserInfo(user);
                 }
                 if (userChanged) {
@@ -71,6 +59,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
                 }
                 SharedPreferences.Editor ed = prefs.edit();
                 ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
+                ed.apply();
             }
 
             @Override
@@ -80,22 +69,29 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         });
     }
 
-    // retrieves user key and, if success, calls loadUser()
+
     @Override
     public void loadUserKey(final SharedPreferences prefs, final boolean userChanged) {
+        String login = prefs.getString(Constants.LOGIN_KEY, "");
+        String password = prefs.getString(Constants.PASSWORD_KEY, "");
+
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_user_name", login);
         parameters.put("api_user_password", password);
+
         Log.d(Constants.TAG, "loadUserKey " + "login " + login + "password " + password);
         model.getUserKey(parameters, new OnLoadFinishedListener() {
             @Override
             public void onSuccess(Object object) {
-                userKey = (String) object;
+                String userKey = object.toString();
                 if (userKey.equals(Constants.WRONG_PASSWORD_RESPONSE)) {
                     view.onWrongLogin();
                 } else {
                     Log.d(Constants.TAG, "loadUserKey() onSuccess(), userKey:" + userKey);
+                    SharedPreferences.Editor ed = prefs.edit();
+                    ed.putString(Constants.USER_KEY_TAG, userKey);
+                    ed.apply();
                     loadUser(prefs, userChanged);
                 }
             }
@@ -108,11 +104,6 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     }
 
     @Override
-    public User getUser() {
-        return user;
-    }
-
-    @Override
     public void onDestroy() {
         view = null;
     }
@@ -121,22 +112,25 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     public void setUserInfo(User user) {
         view.setAvatar(user.getUserAvatarUrl());
         view.setUserName(user.getUserName());
-        view.setUser(user);
     }
 
     @Override
     public void setData(SharedPreferences prefs) {
-        if (user != null) {
-            setUserInfo(user);
-        } else {
-            loadUserKey(prefs, false);
+        if(prefs.getBoolean(Constants.IS_REGISTERED_KEY, false)){
+            loadUser(prefs, false);
+        } else{
+            view.setGuest();
         }
     }
 
     @Override
-    public void onLogout() {
+    public void onLogout(SharedPreferences prefs) {
+        Log.d(Constants.TAG, "onLogout");
         view.setLoginScreen();
-        isRegistered = false;
+        SharedPreferences.Editor ed = prefs.edit();
+        ed.putBoolean(Constants.IS_REGISTERED_KEY, false);
+        ed.apply();
+
     }
 
     @Override
@@ -145,17 +139,13 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             SharedPreferences.Editor ed = prefs.edit();
             ed.putString(Constants.LOGIN_KEY, login);
             ed.putString(Constants.PASSWORD_KEY, password);
-            ed.commit();
+            ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
+            ed.apply();
         }
-        this.login = prefs.getString(Constants.LOGIN_KEY, null);
-        this.password = prefs.getString(Constants.PASSWORD_KEY, null);
+
         loadUserKey(prefs, true);
     }
 
-    @Override
-    public boolean isRegistered() {
-        return isRegistered;
-    }
 
     private void setView(IMainScreen.IView view) {
         this.view = view;

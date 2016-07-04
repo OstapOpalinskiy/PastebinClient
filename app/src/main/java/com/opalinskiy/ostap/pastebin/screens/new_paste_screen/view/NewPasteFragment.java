@@ -9,6 +9,7 @@ import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.opalinskiy.ostap.pastebin.R;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.INewPaste;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.presenter.NewPastePresenter;
 
@@ -37,6 +39,9 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
     private EditText etPasteName;
     private TextView tvLink;
     private TextView tvHeadLine;
+    private boolean isLinkShown;
+    //TODO: save state after config change
+
 
     @Nullable
     @Override
@@ -46,7 +51,16 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         setSpinnerAdapters();
         setBottomSheetCallback();
         setHasOptionsMenu(true);
+        setRetainInstance(true);
+        presenter.restoreState(savedInstanceState);
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);
+        outState.putString(Constants.LINK_KEY, tvLink.getText().toString());
+        super.onSaveInstanceState(outState);
     }
 
     private void setBottomSheetCallback() {
@@ -82,6 +96,7 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         etPasteName = (EditText) bottomSheet.findViewById(R.id.et_paste_name_BS);
         tvLink = (TextView) view.findViewById(R.id.tv_link_MSF);
         tvHeadLine = (TextView) view.findViewById(R.id.tv_headline_MSF);
+        isLinkShown = false;
 
         tvLink.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +104,6 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
                 String url = tvLink.getText().toString();
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 presenter.openLink(getActivity(), intent);
-
             }
         });
     }
@@ -107,12 +121,12 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
         spinnerSyntax.setAdapter(adapterSyntax);
 
         ArrayAdapter<?> adapterExpiration =
-                ArrayAdapter.createFromResource(getActivity(), R.array.expiration,  R.layout.spinner_item);
+                ArrayAdapter.createFromResource(getActivity(), R.array.expiration, R.layout.spinner_item);
         adapterExpiration.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerExpiration.setAdapter(adapterExpiration);
 
         ArrayAdapter<?> adapterExposure =
-                ArrayAdapter.createFromResource(getActivity(), R.array.exposure,  R.layout.spinner_item);
+                ArrayAdapter.createFromResource(getActivity(), R.array.exposure, R.layout.spinner_item);
         adapterExposure.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerExposure.setAdapter(adapterExposure);
     }
@@ -148,21 +162,23 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
 
     @Override
     public void showLink(String pasteUrl) {
-        tvHeadLine.setText("Your link:");
+        tvHeadLine.setText(R.string.your_link);
         etCode.setText("");
         etCode.setVisibility(View.INVISIBLE);
         tvLink.setVisibility(View.VISIBLE);
         SpannableString content = new SpannableString(pasteUrl);
         content.setSpan(new UnderlineSpan(), 0, pasteUrl.length(), 0);
         tvLink.setText(content);
+        isLinkShown = true;
     }
 
     @Override
     public void clearLink() {
-        tvHeadLine.setText("Type code here:");
+        tvHeadLine.setText(R.string.type_code_here);
         etCode.setVisibility(View.VISIBLE);
         etCode.setText("");
         tvLink.setVisibility(View.INVISIBLE);
+        isLinkShown = false;
     }
 
 

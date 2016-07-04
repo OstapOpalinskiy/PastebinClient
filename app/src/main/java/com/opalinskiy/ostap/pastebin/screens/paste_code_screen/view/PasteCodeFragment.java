@@ -12,9 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.IPasteCodeScreen;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.presenter.PasteCodePresenter;
 
@@ -28,8 +27,7 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.paste_code_fragment, container, false);
         tvCode = (TextView) view.findViewById(R.id.tv_code_PCF);
-        final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = new PasteCodePresenter((IMainScreen.IView)getActivity(),this, prefs);
+        presenter = new PasteCodePresenter(this);
         url = getArguments().getString(Constants.URL_KEY);
         int myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
         if (myOrTrending == Constants.MY_PASTES) {
@@ -53,7 +51,8 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        presenter.deletePaste(url);
+        SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
+        presenter.deletePaste(url, prefs);
         return super.onOptionsItemSelected(item);
     }
 

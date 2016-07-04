@@ -4,9 +4,7 @@ import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 
-/**
- * Created by Evronot on 10.06.2016.
- */
+
 public interface IMainScreen {
 
     interface IPresenter {
@@ -14,24 +12,18 @@ public interface IMainScreen {
 
         void loadUserKey(SharedPreferences prefs, boolean userChanged);
 
-        User getUser();
-
         void onDestroy();
 
         void setUserInfo(User user);
 
         void setData(SharedPreferences prefs);
 
-        void onLogout();
+        void onLogout(SharedPreferences preferences);
 
         void onLogin(String login, String password, SharedPreferences preferences);
-
-        boolean isRegistered();
-
     }
 
     interface IView {
-        void setUser(User user);
 
         void setAvatar(String url);
 
@@ -42,6 +34,8 @@ public interface IMainScreen {
         void setProfileScreen();
 
         void onWrongLogin();
+
+        void setGuest();
 
     }
 }

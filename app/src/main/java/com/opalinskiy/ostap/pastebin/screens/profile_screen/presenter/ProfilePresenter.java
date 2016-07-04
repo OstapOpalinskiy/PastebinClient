@@ -9,9 +9,9 @@ import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
-import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
+import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
 import java.util.HashMap;
@@ -19,24 +19,25 @@ import java.util.Map;
 
 
 public class ProfilePresenter implements IProfileScreen.IPresenter {
-    IMainScreen.IPresenter mainPresenter;
-    IProfileScreen.IProfileView view;
+    private IMainScreen.IPresenter mainPresenter;
+    private IProfileScreen.IProfileView view;
     private IDataInteractor model;
 
-    public ProfilePresenter( IProfileScreen.IProfileView view
-            , IMainScreen.IView mainView, SharedPreferences preferences) {
-        mainPresenter = MainScreenPresenter.getInstance(mainView, preferences);
+    public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView) {
+        mainPresenter = MainScreenPresenter.getInstance(mainView);
         this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.view = view;
     }
 
     @Override
     public void onLogout(SharedPreferences preferences) {
-        mainPresenter.onLogout();
+        mainPresenter.onLogout(preferences);
     }
 
 
-    public void loadUser(final SharedPreferences prefs, final boolean userChanged) {
+    private void loadUser(final SharedPreferences prefs) {
+
+        String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
 
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
@@ -50,12 +51,10 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
                 User user = (User) object;
                 if (user != null) {
                     view.showUser(user);
+                    SharedPreferences.Editor ed = prefs.edit();
+                    ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
+                    ed.apply();
                 }
-                if (userChanged) {
-                    view.setProfileScreen();
-                }
-                SharedPreferences.Editor ed = prefs.edit();
-                ed.putBoolean(Constants.IS_REGISTERED_KEY, true);
             }
 
             @Override
@@ -64,14 +63,14 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
             }
         });
     }
-
+    
     @Override
-    public void loadData(SharedPreferences preferences) {
-        User user = mainPresenter.getUser();
-        boolean isRegistered = mainPresenter.isRegistered();
-        if(isRegistered){
-           loadUser(preferences, false);
-        }else {
+    public void loadData(SharedPreferences prefs) {
+        boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
+        Log.d(Constants.TAG, "is Registered:  in profile:" + isRegistered);
+        if (isRegistered) {
+            loadUser(prefs);
+        } else {
             view.showGuest();
         }
     }

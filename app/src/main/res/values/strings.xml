@@ -57,5 +57,15 @@
     <string name="no_pastes_yet">No pastes yet.</string>
     <string name="action_post_paste">Post paste</string>
     <string name="action_clear">clear</string>
+    <string name="your_link">Your link:</string>
+    <string name="type_code_here">Type code here:</string>
+    <string name="syntax_highlight">Syntax highlight:</string>
+    <string name="paste_expiration">Paste expiration:</string>
+    <string name="paste_exposure">Paste exposure:</string>
+    <string name="paste_name">Paste name:</string>
+    <string name="no_title">No title</string>
+    <string name="name">Name:</string>
+    <string name="email">Email:</string>
+    <string name="location">Location:</string>
 </resources>
 

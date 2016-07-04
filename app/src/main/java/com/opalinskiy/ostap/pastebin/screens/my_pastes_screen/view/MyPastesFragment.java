@@ -11,24 +11,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
+import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
-import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view.PasteCodeFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.view.NavigationDrawerActivity;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter.MyPastesPresenter;
-
+import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view.PasteCodeFragment;
 
 import java.util.List;
 
 public class MyPastesFragment extends Fragment
         implements IMyPastesScreen.IView, IMyPastesScreen.IItemClickHandler {
     private IMyPastesScreen.IPresenter presenter;
-    private List<Paste> pasteList;
     private RecyclerView recyclerView;
     private int myOrTrending;
+    private SharedPreferences prefs;
 
     @Nullable
     @Override
@@ -36,15 +34,15 @@ public class MyPastesFragment extends Fragment
             , @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_pastes_fragment, container, false);
         init(view);
-        presenter.showMyPastes();
+        presenter.showMyPastes(prefs);
         return view;
     }
 
     private void init(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_MPF);
         myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
-        final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = new MyPastesPresenter(this, ((IMainScreen.IView) getActivity()), myOrTrending, prefs);
+        prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
+        presenter = new MyPastesPresenter(this, myOrTrending);
     }
 
     @Override
@@ -59,7 +57,6 @@ public class MyPastesFragment extends Fragment
 
     @Override
     public void setUsersList(List<Paste> myPastes) {
-        pasteList = myPastes;
         setDataToRecyclerView(myPastes);
     }
 
@@ -92,7 +89,7 @@ public class MyPastesFragment extends Fragment
 
     @Override
     public void onDestroy() {
-        if(presenter != null){
+        if (presenter != null) {
             presenter.onDestroy();
         }
         super.onDestroy();

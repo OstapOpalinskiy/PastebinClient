@@ -4,12 +4,11 @@ import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
-import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
+import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
-import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
@@ -25,33 +24,27 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private IDataInteractor model;
     private IMyPastesScreen.IView view;
     private int myOrTrending;
-    private IMainScreen.IPresenter mainPresenter;
 
 
-    public MyPastesPresenter(IMyPastesScreen.IView view
-            , IMainScreen.IView mainView, int myOrTrending, SharedPreferences preferences) {
+    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
         this.view = view;
-        mainPresenter = MainScreenPresenter.getInstance(mainView, preferences);
         model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.myOrTrending = myOrTrending;
     }
 
-
     @Override
-    public void showMyPastes() {
-        User user = mainPresenter.getUser();
-        boolean isRegistered = mainPresenter.isRegistered();
-        if(myOrTrending == Constants.MY_PASTES){
+    public void showMyPastes(SharedPreferences prefs) {
+        String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
+        boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
+        if (myOrTrending == Constants.MY_PASTES) {
             if (isRegistered) {
-                getMyPastes(user.getUserKey());
+                getMyPastes(userKey);
             } else {
-                mainPresenter.onLogout();
                 view.showMessage();
             }
-        }else{
+        } else {
             getTrends();
         }
-
     }
 
     @Override

@@ -10,7 +10,7 @@ public interface IProfileScreen {
 
     interface IPresenter {
         void onLogout(SharedPreferences preferences);
-        void loadData(SharedPreferences preferences);
+        void loadData(SharedPreferences prefs);
         void onDestroy();
     }
 

@@ -29,7 +29,7 @@ public class LoginFragment extends Fragment implements ILoginScreen.ILoginView {
         initViews(view);
 
         final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter =new LoginPresenter((IMainScreen.IView)getActivity(), prefs);
+        presenter =new LoginPresenter((IMainScreen.IView)getActivity());
 
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +37,7 @@ public class LoginFragment extends Fragment implements ILoginScreen.ILoginView {
                 String login = String.valueOf(etLogin.getText());
                 String password = String.valueOf(etPassword.getText());
                 presenter.onLogin(login, password, prefs);
+
             }
         });
         return view;
