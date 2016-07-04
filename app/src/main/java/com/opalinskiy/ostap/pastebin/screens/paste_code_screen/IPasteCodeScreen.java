@@ -3,6 +3,8 @@ package com.opalinskiy.ostap.pastebin.screens.paste_code_screen;
 
 import android.content.SharedPreferences;
 
+import com.opalinskiy.ostap.pastebin.screens.base.IBaseFragment;
+
 public interface IPasteCodeScreen {
 
     interface IPresenter {
@@ -13,13 +15,9 @@ public interface IPasteCodeScreen {
         void onDestroy();
     }
 
-    interface IView {
+    interface IView extends IBaseFragment {
         void setCode(String code);
 
         void onDeletePaste(String msg);
-
-        void startProgress();
-
-        void stopProgress();
     }
 }

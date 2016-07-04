@@ -1,10 +1,8 @@
 package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.view;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +13,7 @@ import android.widget.Toast;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
+import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.view.NavigationDrawerActivity;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter.MyPastesPresenter;
@@ -22,13 +21,13 @@ import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view.PasteCodeFra
 
 import java.util.List;
 
-public class MyPastesFragment extends Fragment
+public class MyPastesFragment extends BaseFragment
         implements IMyPastesScreen.IView, IMyPastesScreen.IItemClickHandler {
     private IMyPastesScreen.IPresenter presenter;
     private RecyclerView recyclerView;
     private int myOrTrending;
     private SharedPreferences prefs;
-    private ProgressDialog ringProgress;
+
 
     @Nullable
     @Override
@@ -87,17 +86,6 @@ public class MyPastesFragment extends Fragment
         fragment.setArguments(args);
         ((NavigationDrawerActivity) getActivity()).commitFragment(fragment
                 , Constants.MY_PASTES_CODE_FRAGMENT_TAG, true);
-    }
-
-    @Override
-    public void startProgress() {
-        ringProgress = ProgressDialog.show(getActivity(),
-                getActivity().getString(R.string.please_wait), getActivity().getString(R.string.pastes_loading));
-    }
-
-    @Override
-    public void stopProgress() {
-        ringProgress.cancel();
     }
 
     @Override

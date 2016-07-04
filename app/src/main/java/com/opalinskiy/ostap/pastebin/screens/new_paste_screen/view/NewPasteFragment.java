@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
-import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,10 +23,11 @@ import android.widget.Toast;
 
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
+import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.INewPaste;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.presenter.NewPastePresenter;
 
-public class NewPasteFragment extends Fragment implements INewPaste.IView {
+public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     private INewPaste.IPresenter presenter;
     private EditText etCode;
     private BottomSheetBehavior bottomSheetBehavior;
@@ -40,7 +39,6 @@ public class NewPasteFragment extends Fragment implements INewPaste.IView {
     private TextView tvLink;
     private TextView tvHeadLine;
     private boolean isLinkShown;
-    //TODO: save state after config change
 
 
     @Nullable

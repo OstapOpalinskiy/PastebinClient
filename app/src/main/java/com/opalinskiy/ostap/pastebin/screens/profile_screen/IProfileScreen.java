@@ -3,6 +3,7 @@ package com.opalinskiy.ostap.pastebin.screens.profile_screen;
 import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
+import com.opalinskiy.ostap.pastebin.screens.base.IBaseFragment;
 
 
 public interface IProfileScreen {
@@ -15,10 +16,8 @@ public interface IProfileScreen {
     }
 
 
-    interface IProfileView {
+    interface IProfileView extends IBaseFragment  {
         void showUser(User user);
         void showGuest();
-        void startProgress();
-        void stopProgress();
     }
 }

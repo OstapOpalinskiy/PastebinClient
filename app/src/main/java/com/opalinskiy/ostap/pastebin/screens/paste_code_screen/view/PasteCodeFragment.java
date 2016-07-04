@@ -1,10 +1,8 @@
 package com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -15,14 +13,15 @@ import android.widget.TextView;
 
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
+import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.IPasteCodeScreen;
 import com.opalinskiy.ostap.pastebin.screens.paste_code_screen.presenter.PasteCodePresenter;
 
-public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IView {
+public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.IView {
     private TextView tvCode;
     private IPasteCodeScreen.IPresenter presenter;
     private String url;
-    private ProgressDialog ringProgress;
+
 
     @Nullable
     @Override
@@ -67,17 +66,6 @@ public class PasteCodeFragment extends Fragment implements IPasteCodeScreen.IVie
     @Override
     public void onDeletePaste(String s) {
         getActivity().getSupportFragmentManager().popBackStack();
-    }
-
-    @Override
-    public void startProgress() {
-        ringProgress = ProgressDialog.show(getActivity(), 
-                getActivity().getString(R.string.please_wait), getActivity().getString(R.string.paste_code_loading));
-    }
-
-    @Override
-    public void stopProgress() {
-        ringProgress.cancel();
     }
 
     @Override

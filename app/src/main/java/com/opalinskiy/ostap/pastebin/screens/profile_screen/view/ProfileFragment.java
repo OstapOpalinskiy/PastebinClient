@@ -1,10 +1,9 @@
 package com.opalinskiy.ostap.pastebin.screens.profile_screen.view;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
+import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.IProfileScreen;
 import com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter.ProfilePresenter;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
@@ -21,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProfileFragment extends Fragment implements IProfileScreen.IProfileView {
+public class ProfileFragment extends BaseFragment implements IProfileScreen.IProfileView {
     private TextView tvName;
     private TextView tvEmail;
     private TextView tvLocation;
@@ -29,7 +29,6 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     private CircleImageView avatar;
     private IProfileScreen.IPresenter presenter;
     private SharedPreferences prefs;
-    private ProgressDialog ringProgress;
 
 
     @Nullable
@@ -92,19 +91,8 @@ public class ProfileFragment extends Fragment implements IProfileScreen.IProfile
     }
 
     @Override
-    public void startProgress() {
-        ringProgress = ProgressDialog.show(getActivity(),
-                getActivity().getString(R.string.please_wait), getActivity().getString(R.string.user_data_loading));
-    }
-
-    @Override
-    public void stopProgress() {
-        ringProgress.cancel();
-    }
-
-    @Override
     public void onDestroy() {
-        if(presenter != null){
+        if (presenter != null) {
             presenter.onDestroy();
         }
         super.onDestroy();

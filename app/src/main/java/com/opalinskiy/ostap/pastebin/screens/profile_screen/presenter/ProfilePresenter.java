@@ -36,7 +36,7 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
 
 
     private void loadUser(final SharedPreferences prefs) {
-        view.startProgress();
+        view.startProgress("Please wait...", "User data is loading");
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
 
         Map<String, String> parameters = new HashMap<>();

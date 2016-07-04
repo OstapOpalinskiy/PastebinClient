@@ -3,9 +3,7 @@ package com.opalinskiy.ostap.pastebin.interactor;
 
 import java.util.Map;
 
-/**
- * Created by Evronot on 10.06.2016.
- */
+
 public interface IDataInteractor {
 
     void postPaste(Map<String, String> parameters, OnLoadFinishedListener listener);

@@ -52,6 +52,7 @@ public class NewPastePresenter implements INewPaste.IPresenter {
     @Override
     public void onPostPaste(String pasteCode, String name, String syntax, String expiration, String exposure) {
         if (!TextUtils.isEmpty(pasteCode)) {
+            view.startProgress("Please wait...", "Paste is sending to the server.");
             Map<String, String> parameters = new HashMap<>();
             parameters.put("api_dev_key", Constants.API_DEV_KEY);
             parameters.put("api_paste_code", pasteCode);
@@ -66,11 +67,13 @@ public class NewPastePresenter implements INewPaste.IPresenter {
                 public void onSuccess(Object object) {
                     view.showLink(object.toString());
                     Log.d(Constants.TAG, "after show link");
+                    view.stopProgress();
                 }
 
                 @Override
                 public void onFailure(Object object) {
                     Log.d(Constants.TAG, "onFailure() in onPostPaste()");
+                    view.stopProgress();
                 }
             });
         } else {

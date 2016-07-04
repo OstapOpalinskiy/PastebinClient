@@ -32,7 +32,6 @@ public class DataInteractor implements IDataInteractor {
                          @Override
                          public void onResponse(Call<String> call, Response<String> response) {
                              String url = response.body().toString();
-                             Log.d(Constants.TAG, "pasteList: " + url);
                              listener.onSuccess(url);
                          }
 

@@ -2,14 +2,14 @@ package com.opalinskiy.ostap.pastebin.screens.login_screen;
 
 import android.content.SharedPreferences;
 
-/**
- * Created by Evronot on 15.06.2016.
- */
+import com.opalinskiy.ostap.pastebin.screens.base.IBaseFragment;
+
+
 public interface ILoginScreen {
 
     interface IPresenter {
         void onLogin(String login, String password, SharedPreferences preferences);
     }
 
-    interface ILoginView {}
+    interface ILoginView extends IBaseFragment {}
 }

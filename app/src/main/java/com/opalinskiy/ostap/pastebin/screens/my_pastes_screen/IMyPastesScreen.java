@@ -3,6 +3,7 @@ package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen;
 import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
+import com.opalinskiy.ostap.pastebin.screens.base.IBaseFragment;
 
 import java.util.List;
 
@@ -19,11 +20,9 @@ public interface IMyPastesScreen {
         void onDestroy();
     }
 
-    interface IView {
+    interface IView extends IBaseFragment {
         void setUsersList(List<Paste> list);
         void showMessage();
-        void startProgress();
-        void stopProgress();
     }
 
     interface IItemClickHandler {

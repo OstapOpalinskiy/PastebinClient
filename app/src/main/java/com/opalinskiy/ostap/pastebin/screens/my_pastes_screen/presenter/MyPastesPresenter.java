@@ -34,7 +34,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void showMyPastes(SharedPreferences prefs) {
-        view.startProgress();
+        view.startProgress("Please wait...", "Pastes is loading.");
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
         if (myOrTrending == Constants.MY_PASTES) {

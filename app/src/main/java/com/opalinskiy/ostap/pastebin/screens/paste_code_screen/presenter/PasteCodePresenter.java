@@ -27,7 +27,7 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
 
     @Override
     public void getCode(String url) {
-        view.startProgress();
+        view.startProgress("Please wait...", "Paste code is loading.");
         String pasteKey = url.substring(Constants.BASE_URL.length());
 
         model.getRawPasteCode(pasteKey, new OnLoadFinishedListener() {

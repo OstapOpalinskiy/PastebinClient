@@ -4,18 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.opalinskiy.ostap.pastebin.screens.base.IBaseFragment;
+
 
 public interface INewPaste {
-
-    interface IView {
-        void setText(String pasteUrl);
-
-        void showMessage();
-
-        void showLink(String pasteUrl);
-
-        void clearLink();
-    }
 
     interface IPresenter {
         void restoreState(Bundle bundle);
@@ -28,6 +20,17 @@ public interface INewPaste {
 
         void openLink(Context context, Intent intent);
     }
+
+    interface IView extends IBaseFragment {
+        void setText(String pasteUrl);
+
+        void showMessage();
+
+        void showLink(String pasteUrl);
+
+        void clearLink();
+    }
+
 
 
 }
