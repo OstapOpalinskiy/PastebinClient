@@ -25,14 +25,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_BS"
         android:weightSum="2"
-        style="@style/bottomSheetLayoutStyle">
+        style="@style/BottomSheetLayoutStyle">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/syntax_highlight"
-            style="@style/textViewBSheetStyle" />
+            style="@style/TextViewBSheetStyle" />
 
         <Spinner
             android:id="@+id/spinner_syntax_BS"
@@ -47,14 +47,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_syntax_BS"
         android:weightSum="2"
-        style="@style/bottomSheetLayoutStyle">
+        style="@style/BottomSheetLayoutStyle">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/paste_expiration"
-            style="@style/textViewBSheetStyle" />
+            style="@style/TextViewBSheetStyle" />
 
         <Spinner
             android:id="@+id/spinner_expiration_BS"
@@ -69,14 +69,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_expiration_BS"
         android:weightSum="2"
-        style="@style/bottomSheetLayoutStyle">
+        style="@style/BottomSheetLayoutStyle">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/paste_exposure"
-            style="@style/textViewBSheetStyle" />
+            style="@style/TextViewBSheetStyle" />
 
         <Spinner
             android:id="@+id/spinner_exposure_BS"
@@ -90,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ll_exposure_BS"
-        style="@style/bottomSheetLayoutStyle">
+        style="@style/BottomSheetLayoutStyle">
         <EditText
             android:hint="@string/paste_name"
             android:textColorHint="@android:color/white"

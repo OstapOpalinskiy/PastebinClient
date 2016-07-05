@@ -40,9 +40,9 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
             }
 
             @Override
-            public void onFailure(Object object) {
+            public void onFailure(String msg) {
                 view.stopProgress();
-                view.showMessage(object.toString());
+                view.showMessage(msg);
             }
         });
     }
@@ -66,8 +66,8 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
             }
 
             @Override
-            public void onFailure(Object object) {
-                view.showMessage(object.toString());
+            public void onFailure(String msg) {
+                view.showMessage(msg);
             }
         });
 

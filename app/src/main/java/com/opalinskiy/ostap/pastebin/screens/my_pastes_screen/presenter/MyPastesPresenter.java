@@ -64,8 +64,8 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             }
 
             @Override
-            public void onFailure(Object object) {
-                showErrorMsg(object);
+            public void onFailure(String msg) {
+                showErrorMsg(msg);
             }
         });
     }
@@ -88,14 +88,14 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             }
 
             @Override
-            public void onFailure(Object object) {
-                showErrorMsg(object);
+            public void onFailure(String msg) {
+                showErrorMsg(msg);
             }
         });
     }
 
-    private void showErrorMsg(Object object) {
-        view.showMessage(object.toString());
+    private void showErrorMsg(String msg) {
+        view.showMessage(msg);
         view.stopProgress();
     }
 

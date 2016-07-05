@@ -71,9 +71,9 @@ public class NewPastePresenter implements INewPaste.IPresenter {
                 }
 
                 @Override
-                public void onFailure(Object object) {
+                public void onFailure(String msg) {
                     Log.d(Constants.TAG, "onFailure() in onPostPaste()");
-                    view.showMessage(object.toString());
+                    view.showMessage(msg);
                     view.stopProgress();
                 }
             });

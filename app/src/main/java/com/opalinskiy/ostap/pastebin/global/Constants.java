@@ -7,7 +7,6 @@ import java.util.Map;
 
 
 public class Constants {
-    public static final String SAVE_USER_KEY = "save user";
     public static final String LOGIN_KEY = "login key";
     public static final String PASSWORD_KEY = "password key";
     public static final String USER_KEY_TAG = "password key";
@@ -25,8 +24,6 @@ public class Constants {
     public static final int TRENDING_PASTES = 2;
     public static final String PROFILE_FRAGMENT_TAG = "profile fragment" ;
     public static final String LOGIN_FRAGMENT_TAG = "login fragment" ;
-    public static final String WRONG_LOGIN_RESPONSE = "Bad API request, invalid login" ;
-    public static final String PASTE_LIMIT_REACHED = "Post limit, maximum pastes per 24h reached" ;
     public static final String NO_CONNECTION_MSG = "No internet connection." ;
     public static final String WRONG_PASSWORD_RESPONSE = "Bad API request, invalid login" ;
     public static final String IS_LINK_SHOWN_KEY = "is link shown";

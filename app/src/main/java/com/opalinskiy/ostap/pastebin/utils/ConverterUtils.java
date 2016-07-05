@@ -25,8 +25,7 @@ import retrofit2.Response;
 public  class ConverterUtils {
 
     public  PasteList responseBodyToPasteList(Response<ResponseBody> response){
-        InputStream is = response.body().byteStream();
-        String myString = new Scanner(is, "UTF-8").useDelimiter("\\A").next();
+        String myString = getString(response);
 
         JSONObject xmlJSONObj = null;
         try {
@@ -56,8 +55,7 @@ public  class ConverterUtils {
 
 
     public  User responseBodyToUser(Response<ResponseBody> response){
-        InputStream is = response.body().byteStream();
-        String myString = new Scanner(is, "UTF-8").useDelimiter("\\A").next();
+        String myString = getString(response);
 
         JSONObject xmlJSONObj = null;
         try {
@@ -71,5 +69,10 @@ public  class ConverterUtils {
         Type type = new TypeToken<UserResponse>() {}.getType();
         UserResponse userResponse = gson.fromJson(xmlJSONObj.toString(), type);
         return userResponse.getUser();
+    }
+
+    private String getString(Response<ResponseBody> response) {
+        InputStream is = response.body().byteStream();
+        return new Scanner(is, "UTF-8").useDelimiter("\\A").next();
     }
 }

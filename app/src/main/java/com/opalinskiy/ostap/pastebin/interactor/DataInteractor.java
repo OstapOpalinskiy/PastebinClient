@@ -46,7 +46,6 @@ public class DataInteractor implements IDataInteractor {
                              @Override
                              public void onFailure(Call<String> call, Throwable t) {
                                  listener.onFailure(t.getMessage());
-                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
                              }
                          }
             );
@@ -70,7 +69,6 @@ public class DataInteractor implements IDataInteractor {
                              @Override
                              public void onFailure(Call<String> call, Throwable t) {
                                  listener.onFailure(t.getMessage());
-                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
                              }
                          }
             );
@@ -83,7 +81,6 @@ public class DataInteractor implements IDataInteractor {
     public void getUsersPastes(Map<String, String> parameters, final OnLoadFinishedListener listener) {
         if (isThereInternetConnection()) {
             Call<ResponseBody> call = connection.getListOfPastes(parameters);
-            Log.d(Constants.TAG, "before call ");
             call.enqueue(new Callback<ResponseBody>() {
                              @Override
                              public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -94,7 +91,6 @@ public class DataInteractor implements IDataInteractor {
                              @Override
                              public void onFailure(Call<ResponseBody> call, Throwable t) {
                                  listener.onFailure(t.getMessage());
-                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
                              }
                          }
             );
@@ -117,7 +113,6 @@ public class DataInteractor implements IDataInteractor {
                              @Override
                              public void onFailure(Call<String> call, Throwable t) {
                                  listener.onFailure(t.getMessage());
-                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
                              }
                          }
             );
@@ -135,14 +130,12 @@ public class DataInteractor implements IDataInteractor {
                              @Override
                              public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                                  PasteList pasteList = converterUtils.responseBodyToPasteList(response);
-                                 Log.d(Constants.TAG, "pasteListTrending: " + pasteList.getPasteList().get(2));
                                  listener.onSuccess(pasteList);
                              }
 
                              @Override
                              public void onFailure(Call<ResponseBody> call, Throwable t) {
                                  listener.onFailure(t.getMessage());
-                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
                              }
                          }
             );
@@ -165,7 +158,6 @@ public class DataInteractor implements IDataInteractor {
                          @Override
                          public void onFailure(Call<String> call, Throwable t) {
                              listener.onFailure(t.getMessage());
-                             Log.d(Constants.TAG, "onFailure()" + t.toString());
                          }
                      }
         );
@@ -189,7 +181,6 @@ public class DataInteractor implements IDataInteractor {
                          @Override
                          public void onFailure(Call<ResponseBody> call, Throwable t) {
                              listener.onFailure(t.getMessage());
-                             Log.d(Constants.TAG, "onFailure()" + t.toString());
                          }
                      }
         );

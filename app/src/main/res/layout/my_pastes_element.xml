@@ -31,14 +31,14 @@
                 android:text="@string/no_title"
                 android:ellipsize="end"
                 android:singleLine="true"
-                style="@style/recyclerViewTextStyle" />
+                style="@style/RecyclerViewTextStyle" />
             <TextView
                 android:id="@+id/tv_date_MPE"
                 android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 tools:text="date"
-                style="@style/recyclerViewTextStyle" />
+                style="@style/RecyclerViewTextStyle" />
         </RelativeLayout>
         <TextView
             android:id="@+id/tv_code_MPE"
@@ -48,7 +48,7 @@
             android:maxLength="30"
             android:ellipsize="end"
             android:textSize="15sp"
-            style="@style/recyclerViewTextStyle"
+            style="@style/RecyclerViewTextStyle"
             />
     </LinearLayout>
 

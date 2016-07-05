@@ -64,8 +64,8 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             }
 
             @Override
-            public void onFailure(Object object) {
-                view.showMessage(object.toString());
+            public void onFailure(String msg) {
+                view.showMessage(msg);
             }
         });
     }
@@ -98,9 +98,8 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             }
 
             @Override
-            public void onFailure(Object object) {
-                view.showMessage(object.toString());
-                Log.d(Constants.TAG, "loadUserKey() onFailure:" + object);
+            public void onFailure(String msg) {
+                view.showMessage(msg);
             }
         });
     }

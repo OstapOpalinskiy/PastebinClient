@@ -17,14 +17,14 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="tvProfileStyle">
-        <item name="android:textSize">20dp</item>
+    <style name="TvProfileStyle">
+        <item name="android:textSize">20sp</item>
         <item name="android:layout_marginLeft">15dp</item>
         <!--<item name="android:gravity">center</item>-->
     </style>
 
-    <style name="recyclerViewTextStyle">
-        <item name="android:textSize">20dp</item>
+    <style name="RecyclerViewTextStyle">
+        <item name="android:textSize">20sp</item>
         <item name="android:padding">10dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/white</item>
@@ -43,13 +43,13 @@
 
     </style>
 
-    <style name="bottomSheetLayoutStyle">
+    <style name="BottomSheetLayoutStyle">
         <item name="android:padding">5dp</item>
         <item name="android:background">@color/colorPrimary</item>
 
     </style>
 
-    <style name="textViewBSheetStyle">
+    <style name="TextViewBSheetStyle">
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@android:color/white</item>

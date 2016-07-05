@@ -6,9 +6,7 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.Arrays;
 
-/**
- * Created by Evronot on 08.06.2016.
- */
+
 public class User implements Serializable
 {
     @Expose
