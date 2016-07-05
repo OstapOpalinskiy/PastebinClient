@@ -43,7 +43,7 @@ public class MyPastesFragment extends BaseFragment
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_MPF);
         myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
         prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = new MyPastesPresenter(this, myOrTrending);
+        presenter = new MyPastesPresenter(this, myOrTrending, getActivity());
     }
 
     @Override

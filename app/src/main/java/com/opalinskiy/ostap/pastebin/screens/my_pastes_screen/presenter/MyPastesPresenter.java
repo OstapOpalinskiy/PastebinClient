@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
@@ -24,9 +25,9 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private int myOrTrending;
 
 
-    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
+    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending, Context context) {
         this.view = view;
-        model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+        model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
         this.myOrTrending = myOrTrending;
     }
 

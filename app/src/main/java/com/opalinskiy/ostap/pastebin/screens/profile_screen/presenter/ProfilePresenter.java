@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -23,9 +24,9 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
     private IProfileScreen.IProfileView view;
     private IDataInteractor model;
 
-    public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView) {
-        mainPresenter = MainScreenPresenter.getInstance(mainView);
-        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+    public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView, Context context) {
+        mainPresenter = MainScreenPresenter.getInstance(mainView, context);
+        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
         this.view = view;
     }
 

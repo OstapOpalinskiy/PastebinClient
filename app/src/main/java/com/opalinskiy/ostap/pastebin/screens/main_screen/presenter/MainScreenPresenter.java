@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.main_screen.presenter;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
@@ -22,14 +23,14 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
     private IMainScreen.IView view;
     private IDataInteractor model;
 
-    private MainScreenPresenter(final IMainScreen.IView view) {
+    private MainScreenPresenter(final IMainScreen.IView view, Context context) {
         this.view = view;
-        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
     }
 
-    public static MainScreenPresenter getInstance(IMainScreen.IView view) {
+    public static MainScreenPresenter getInstance(IMainScreen.IView view, Context context) {
         if (instance == null) {
-            instance = new MainScreenPresenter(view);
+            instance = new MainScreenPresenter(view, context);
         } else {
             instance.setView(view);
         }

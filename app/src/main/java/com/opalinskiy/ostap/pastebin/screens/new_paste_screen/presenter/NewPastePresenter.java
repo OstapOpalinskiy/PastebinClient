@@ -24,9 +24,9 @@ public class NewPastePresenter implements INewPaste.IPresenter {
     public static final Map<String, String> expirationMap = new HashMap<>();
     public static final Map<String, String> exposureMap = new HashMap<>();
 
-    public NewPastePresenter(INewPaste.IView view) {
+    public NewPastePresenter(INewPaste.IView view, Context context) {
         this.view = view;
-        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
         expirationMap.put("Never", "N");
         expirationMap.put("10 Minutes", "10M");
         expirationMap.put("1 Hour", "1H");

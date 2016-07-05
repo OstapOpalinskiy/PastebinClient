@@ -80,7 +80,7 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     }
 
     private void init(View view) {
-        presenter = new NewPastePresenter(this);
+        presenter = new NewPastePresenter(this, getActivity());
         etCode = (EditText) view.findViewById(R.id.et_code_MSF);
 
         View bottomSheet = view.findViewById(R.id.bottom_sheet_view);

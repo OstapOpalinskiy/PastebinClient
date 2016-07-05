@@ -48,7 +48,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
     protected void init() {
         preferences = getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = MainScreenPresenter.getInstance(this);
+        presenter = MainScreenPresenter.getInstance(this, this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -94,7 +94,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_new_paste) {
             NewPasteFragment fragment = new NewPasteFragment();
-            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
+            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, true);
 
         } else if (id == R.id.nav_trending) {
             MyPastesFragment fragment = new MyPastesFragment();
@@ -110,10 +110,10 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_profile) {
             ProfileFragment fragment = new ProfileFragment();
-            commitFragment(fragment, Constants.PROFILE_FRAGMENT_TAG, true);
+            commitFragment(fragment, Constants.PROFILE_FRAGMENT_TAG, false);
         } else if (id == R.id.nav_log_in) {
             LoginFragment fragment = new LoginFragment();
-            commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, true);
+            commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, false);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -1,6 +1,8 @@
 package com.opalinskiy.ostap.pastebin.interactor;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
@@ -20,11 +22,13 @@ import retrofit2.Retrofit;
 public class DataInteractor implements IDataInteractor {
     private Api connection;
     private ConverterUtils converterUtils;
+    private Context context;
 
 
-    public DataInteractor(Retrofit retrofit, ConverterUtils converterUtils) {
+    public DataInteractor(Retrofit retrofit, ConverterUtils converterUtils, Context context) {
         connection = retrofit.create(Api.class);
         this.converterUtils = converterUtils;
+        this.context = context;
     }
 
     @Override
@@ -195,9 +199,8 @@ public class DataInteractor implements IDataInteractor {
     }
 
     private boolean isThereInternetConnection() {
-//        ConnectivityManager connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-//        return (networkInfo != null && networkInfo.isConnectedOrConnecting());
-        return true;
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return (networkInfo != null && networkInfo.isConnectedOrConnecting());
     }
 }

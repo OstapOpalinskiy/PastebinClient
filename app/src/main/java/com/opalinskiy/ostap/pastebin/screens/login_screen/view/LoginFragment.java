@@ -22,6 +22,7 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
     private EditText etPassword;
     private TextView tvLogin;
     private ILoginScreen.IPresenter presenter;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,8 +30,7 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
         initViews(view);
 
         final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter =new LoginPresenter((IMainScreen.IView)getActivity());
-
+        presenter = new LoginPresenter((IMainScreen.IView) getActivity(), getActivity());
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

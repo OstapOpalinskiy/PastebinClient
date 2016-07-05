@@ -28,7 +28,7 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.paste_code_fragment, container, false);
         tvCode = (TextView) view.findViewById(R.id.tv_code_PCF);
-        presenter = new PasteCodePresenter(this);
+        presenter = new PasteCodePresenter(this, getActivity());
         url = getArguments().getString(Constants.URL_KEY);
         int myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
         if (myOrTrending == Constants.MY_PASTES) {

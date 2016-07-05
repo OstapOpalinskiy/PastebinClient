@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.paste_code_screen.presenter;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -20,9 +21,9 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     private IPasteCodeScreen.IView view;
 
 
-    public PasteCodePresenter(IPasteCodeScreen.IView view) {
+    public PasteCodePresenter(IPasteCodeScreen.IView view, Context context) {
         this.view = view;
-        model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+        model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
     }
 
     @Override

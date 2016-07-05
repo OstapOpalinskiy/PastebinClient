@@ -36,7 +36,7 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         initViews(view);
-        presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity());
+        presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity(), getActivity());
         prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override

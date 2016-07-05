@@ -1,6 +1,7 @@
 package com.opalinskiy.ostap.pastebin.screens.login_screen.presenter;
 
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.opalinskiy.ostap.pastebin.screens.login_screen.ILoginScreen;
@@ -11,8 +12,8 @@ import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPre
 public class LoginPresenter implements ILoginScreen.IPresenter {
     IMainScreen.IPresenter mainPresenter;
 
-    public LoginPresenter(IMainScreen.IView view) {
-        mainPresenter = MainScreenPresenter.getInstance(view);
+    public LoginPresenter(IMainScreen.IView view, Context context) {
+        mainPresenter = MainScreenPresenter.getInstance(view, context);
     }
 
     @Override
