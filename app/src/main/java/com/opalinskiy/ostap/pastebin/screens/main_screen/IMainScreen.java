@@ -33,7 +33,7 @@ public interface IMainScreen {
 
         void setProfileScreen();
 
-        void onWrongLogin();
+        void showMessage(String msg);
 
         void setGuest();
 

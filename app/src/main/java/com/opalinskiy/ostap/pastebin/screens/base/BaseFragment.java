@@ -2,6 +2,7 @@ package com.opalinskiy.ostap.pastebin.screens.base;
 
 import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
+import android.widget.Toast;
 
 
 public class BaseFragment extends Fragment implements IBaseFragment {
@@ -17,5 +18,10 @@ public class BaseFragment extends Fragment implements IBaseFragment {
     @Override
     public void stopProgress() {
         ringProgress.cancel();
+    }
+
+    @Override
+    public void showMessage(String msg) {
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
     }
 }

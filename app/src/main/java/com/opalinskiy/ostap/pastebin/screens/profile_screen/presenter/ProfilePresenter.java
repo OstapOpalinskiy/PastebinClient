@@ -61,6 +61,7 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
             @Override
             public void onFailure(Object object) {
                 view.stopProgress();
+                view.showMessage(object.toString());
                 Log.d(Constants.TAG, "onFailure: " + object);
             }
         });

@@ -64,7 +64,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
             @Override
             public void onFailure(Object object) {
-                Log.d(Constants.TAG, "onFailure: " + object);
+                view.showMessage(object.toString());
             }
         });
     }
@@ -86,7 +86,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
             public void onSuccess(Object object) {
                 String userKey = object.toString();
                 if (userKey.equals(Constants.WRONG_PASSWORD_RESPONSE)) {
-                    view.onWrongLogin();
+                    view.showMessage(object.toString());
                 } else {
                     Log.d(Constants.TAG, "loadUserKey() onSuccess(), userKey:" + userKey);
                     SharedPreferences.Editor ed = prefs.edit();
@@ -98,6 +98,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
             @Override
             public void onFailure(Object object) {
+                view.showMessage(object.toString());
                 Log.d(Constants.TAG, "loadUserKey() onFailure:" + object);
             }
         });

@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.interactor;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
@@ -20,6 +21,7 @@ public class DataInteractor implements IDataInteractor {
     private Api connection;
     private ConverterUtils converterUtils;
 
+
     public DataInteractor(Retrofit retrofit, ConverterUtils converterUtils) {
         connection = retrofit.create(Api.class);
         this.converterUtils = converterUtils;
@@ -27,120 +29,151 @@ public class DataInteractor implements IDataInteractor {
 
     @Override
     public void postPaste(Map<String, String> parameters, final OnLoadFinishedListener listener) {
-        Call<String> call = connection.postPaste(parameters);
-        call.enqueue(new Callback<String>() {
-                         @Override
-                         public void onResponse(Call<String> call, Response<String> response) {
-                             String url = response.body().toString();
-                             listener.onSuccess(url);
-                         }
+        if (isThereInternetConnection()) {
 
-                         @Override
-                         public void onFailure(Call<String> call, Throwable t) {
-                             Log.d(Constants.TAG, "onFailure()" + t.toString());
+            Call<String> call = connection.postPaste(parameters);
+            call.enqueue(new Callback<String>() {
+                             @Override
+                             public void onResponse(Call<String> call, Response<String> response) {
+                                 String url = response.body();
+                                 listener.onSuccess(url);
+                             }
+
+                             @Override
+                             public void onFailure(Call<String> call, Throwable t) {
+                                 listener.onFailure(t.getMessage());
+                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             }
                          }
-                     }
-        );
+            );
+        } else {
+            listener.onFailure(Constants.NO_CONNECTION_MSG);
+        }
+
     }
 
     @Override
     public void getUserKey(Map<String, String> parameters, final OnLoadFinishedListener listener) {
-        Call<String> call = connection.getUserKey(parameters);
-        call.enqueue(new Callback<String>() {
-                         @Override
-                         public void onResponse(Call<String> call, Response<String> response) {
-                             String url = response.body().toString();
-                             listener.onSuccess(url);
-                         }
+        if (isThereInternetConnection()) {
+            Call<String> call = connection.getUserKey(parameters);
+            call.enqueue(new Callback<String>() {
+                             @Override
+                             public void onResponse(Call<String> call, Response<String> response) {
+                                 String url = response.body();
+                                 listener.onSuccess(url);
+                             }
 
-                         @Override
-                         public void onFailure(Call<String> call, Throwable t) {
-                             Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             @Override
+                             public void onFailure(Call<String> call, Throwable t) {
+                                 listener.onFailure(t.getMessage());
+                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             }
                          }
-                     }
-        );
+            );
+        } else {
+            listener.onFailure(Constants.NO_CONNECTION_MSG);
+        }
     }
 
     @Override
     public void getUsersPastes(Map<String, String> parameters, final OnLoadFinishedListener listener) {
-        Call<ResponseBody> call = connection.getListOfPastes(parameters);
-        Log.d(Constants.TAG, "before call ");
-        call.enqueue(new Callback<ResponseBody>() {
-                         @Override
-                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                             PasteList pasteList = converterUtils.responseBodyToPasteList(response);
-                             listener.onSuccess(pasteList);
-                         }
+        if (isThereInternetConnection()) {
+            Call<ResponseBody> call = connection.getListOfPastes(parameters);
+            Log.d(Constants.TAG, "before call ");
+            call.enqueue(new Callback<ResponseBody>() {
+                             @Override
+                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                 PasteList pasteList = converterUtils.responseBodyToPasteList(response);
+                                 listener.onSuccess(pasteList);
+                             }
 
-                         @Override
-                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-                             listener.onFailure(null);
-                             Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             @Override
+                             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                 listener.onFailure(t.getMessage());
+                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             }
                          }
-                     }
-        );
+            );
+        } else {
+            listener.onFailure(Constants.NO_CONNECTION_MSG);
+        }
     }
 
     @Override
     public void getRawPasteCode(String pasteUrl, final OnLoadFinishedListener listener) {
-        Call<String> call = connection.getRawPasteCode(pasteUrl);
-        call.enqueue(new Callback<String>() {
-                         @Override
-                         public void onResponse(Call<String> call, Response<String> response) {
-                             String url = response.body().toString();
-                             listener.onSuccess(url);
-                         }
+        if (isThereInternetConnection()) {
+            Call<String> call = connection.getRawPasteCode(pasteUrl);
+            call.enqueue(new Callback<String>() {
+                             @Override
+                             public void onResponse(Call<String> call, Response<String> response) {
+                                 String url = response.body();
+                                 listener.onSuccess(url);
+                             }
 
-                         @Override
-                         public void onFailure(Call<String> call, Throwable t) {
-                             Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             @Override
+                             public void onFailure(Call<String> call, Throwable t) {
+                                 listener.onFailure(t.getMessage());
+                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             }
                          }
-                     }
-        );
+            );
+        } else {
+            listener.onFailure(Constants.NO_CONNECTION_MSG);
+        }
 
     }
 
     @Override
     public void getListOfTrendingPastes(Map<String, String> parameters, final OnLoadFinishedListener listener) {
-        Call<ResponseBody> call = connection.getListOfPastes(parameters);
-        call.enqueue(new Callback<ResponseBody>() {
-                         @Override
-                         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                             PasteList pasteList = converterUtils.responseBodyToPasteList(response);
-                             Log.d(Constants.TAG, "pasteListTrending: " + pasteList.getPasteList().get(2));
-                             listener.onSuccess(pasteList);
-                         }
+        if (isThereInternetConnection()) {
+            Call<ResponseBody> call = connection.getListOfPastes(parameters);
+            call.enqueue(new Callback<ResponseBody>() {
+                             @Override
+                             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                 PasteList pasteList = converterUtils.responseBodyToPasteList(response);
+                                 Log.d(Constants.TAG, "pasteListTrending: " + pasteList.getPasteList().get(2));
+                                 listener.onSuccess(pasteList);
+                             }
 
-                         @Override
-                         public void onFailure(Call<ResponseBody> call, Throwable t) {
-                             listener.onFailure(null);
-                             Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             @Override
+                             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                 listener.onFailure(t.getMessage());
+                                 Log.d(Constants.TAG, "onFailure()" + t.toString());
+                             }
                          }
-                     }
-        );
+            );
+        } else {
+            listener.onFailure(Constants.NO_CONNECTION_MSG);
+        }
 
     }
 
     @Override
     public void deletePaste(Map<String, String> parameters, final OnLoadFinishedListener listener) {
+        if (isThereInternetConnection()) {
         Call<String> call = connection.deletePaste(parameters);
         call.enqueue(new Callback<String>() {
                          @Override
                          public void onResponse(Call<String> call, Response<String> response) {
-                             listener.onSuccess(response.body().toString());
+                             listener.onSuccess(response.body());
                          }
 
                          @Override
                          public void onFailure(Call<String> call, Throwable t) {
+                             listener.onFailure(t.getMessage());
                              Log.d(Constants.TAG, "onFailure()" + t.toString());
                          }
                      }
         );
+        } else {
+            listener.onFailure(Constants.NO_CONNECTION_MSG);
+        }
 
     }
 
     @Override
     public void getUser(Map<String, String> parameters, final OnLoadFinishedListener listener) {
+        if (isThereInternetConnection()) {
         Call<ResponseBody> call = connection.getUser(parameters);
         call.enqueue(new Callback<ResponseBody>() {
                          @Override
@@ -151,9 +184,20 @@ public class DataInteractor implements IDataInteractor {
 
                          @Override
                          public void onFailure(Call<ResponseBody> call, Throwable t) {
+                             listener.onFailure(t.getMessage());
                              Log.d(Constants.TAG, "onFailure()" + t.toString());
                          }
                      }
         );
+        } else {
+            listener.onFailure(Constants.NO_CONNECTION_MSG);
+        }
+    }
+
+    private boolean isThereInternetConnection() {
+//        ConnectivityManager connectivityManager = (ConnectivityManager) this.context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+//        return (networkInfo != null && networkInfo.isConnectedOrConnecting());
+        return true;
     }
 }

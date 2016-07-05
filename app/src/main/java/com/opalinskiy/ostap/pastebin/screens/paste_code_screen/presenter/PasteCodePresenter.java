@@ -41,7 +41,7 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
             @Override
             public void onFailure(Object object) {
                 view.stopProgress();
-                view.setCode("Can't get code");
+                view.showMessage(object.toString());
             }
         });
     }
@@ -66,7 +66,7 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
 
             @Override
             public void onFailure(Object object) {
-                view.onDeletePaste("Cant delete paste. Error: " + object);
+                view.showMessage(object.toString());
             }
         });
 

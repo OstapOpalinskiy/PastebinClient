@@ -9,8 +9,6 @@ import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
-import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPresenter;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
@@ -66,7 +64,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
             @Override
             public void onFailure(Object object) {
-                view.stopProgress();
+                showErrorMsg(object);
             }
         });
     }
@@ -90,9 +88,14 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
             @Override
             public void onFailure(Object object) {
-                view.stopProgress();
+                showErrorMsg(object);
             }
         });
+    }
+
+    private void showErrorMsg(Object object) {
+        view.showMessage(object.toString());
+        view.stopProgress();
     }
 
     @Override

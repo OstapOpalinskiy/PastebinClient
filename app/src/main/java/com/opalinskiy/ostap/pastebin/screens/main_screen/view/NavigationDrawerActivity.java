@@ -94,7 +94,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_new_paste) {
             NewPasteFragment fragment = new NewPasteFragment();
-            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, true);
+            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
 
         } else if (id == R.id.nav_trending) {
             MyPastesFragment fragment = new MyPastesFragment();
@@ -167,8 +167,8 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     @Override
-    public void onWrongLogin() {
-        Toast.makeText(NavigationDrawerActivity.this, R.string.wrong_login_or_password,
+    public void showMessage(String msg) {
+        Toast.makeText(NavigationDrawerActivity.this, msg,
                 Toast.LENGTH_LONG).show();
     }
 
