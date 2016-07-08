@@ -94,7 +94,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_new_paste) {
             NewPasteFragment fragment = new NewPasteFragment();
-            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, true);
+            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
 
         } else if (id == R.id.nav_trending) {
             MyPastesFragment fragment = new MyPastesFragment();
