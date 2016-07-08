@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,6 +57,8 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.d(Constants.TAG, "is bundle null:" + (outState == null));
+        Log.d(Constants.TAG, "is tvLink null:" + (tvLink == null));
         outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);
         outState.putString(Constants.LINK_KEY, tvLink.getText().toString());
         super.onSaveInstanceState(outState);
