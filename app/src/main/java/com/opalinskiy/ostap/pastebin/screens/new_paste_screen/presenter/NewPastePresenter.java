@@ -26,7 +26,7 @@ public class NewPastePresenter implements INewPaste.IPresenter {
 
     public NewPastePresenter(INewPaste.IView view, Context context) {
         this.view = view;
-        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
         expirationMap.put("Never", "N");
         expirationMap.put("10 Minutes", "10M");
         expirationMap.put("1 Hour", "1H");

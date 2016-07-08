@@ -85,7 +85,7 @@ public class MyPastesFragment extends BaseFragment
         args.putInt(Constants.MY_OR_TRANDING_KEY, myOrTrending);
         fragment.setArguments(args);
         ((NavigationDrawerActivity) getActivity()).commitFragment(fragment
-                , Constants.MY_PASTES_CODE_FRAGMENT_TAG, true);
+                , Constants.MY_PASTES_CODE_FRAGMENT_TAG, true, false);
     }
 
     @Override

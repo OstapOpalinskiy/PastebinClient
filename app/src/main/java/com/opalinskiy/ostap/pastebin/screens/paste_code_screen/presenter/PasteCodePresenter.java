@@ -23,7 +23,7 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
 
     public PasteCodePresenter(IPasteCodeScreen.IView view, Context context) {
         this.view = view;
-        model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
     }
 
     @Override

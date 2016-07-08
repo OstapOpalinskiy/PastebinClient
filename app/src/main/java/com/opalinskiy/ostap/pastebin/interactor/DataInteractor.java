@@ -21,9 +21,16 @@ public class DataInteractor implements IDataInteractor {
     private Api connection;
     private ConverterUtils converterUtils;
     private Context context;
+    private static DataInteractor  instance;
 
+    public static DataInteractor getInstance(Retrofit retrofit, ConverterUtils converterUtils, Context context) {
+        if (instance == null) {
+            instance = new DataInteractor(retrofit, converterUtils, context);
+        }
+        return instance;
+    }
 
-    public DataInteractor(Retrofit retrofit, ConverterUtils converterUtils, Context context) {
+    private DataInteractor(Retrofit retrofit, ConverterUtils converterUtils, Context context) {
         connection = retrofit.create(Api.class);
         this.converterUtils = converterUtils;
         this.context = context;

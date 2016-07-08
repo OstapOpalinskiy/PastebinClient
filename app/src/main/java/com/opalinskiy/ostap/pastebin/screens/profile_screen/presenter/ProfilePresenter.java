@@ -26,7 +26,7 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
 
     public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView, Context context) {
         mainPresenter = MainScreenPresenter.getInstance(mainView, context);
-        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
         this.view = view;
     }
 

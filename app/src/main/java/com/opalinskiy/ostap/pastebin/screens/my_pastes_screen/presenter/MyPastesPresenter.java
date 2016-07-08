@@ -27,7 +27,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending, Context context) {
         this.view = view;
-        model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
         this.myOrTrending = myOrTrending;
     }
 

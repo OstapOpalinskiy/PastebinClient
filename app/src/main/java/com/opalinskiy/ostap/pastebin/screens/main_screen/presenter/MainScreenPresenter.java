@@ -25,7 +25,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     private MainScreenPresenter(final IMainScreen.IView view, Context context) {
         this.view = view;
-        this.model = new DataInteractor(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        this.model =DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
     }
 
     public static MainScreenPresenter getInstance(IMainScreen.IView view, Context context) {
