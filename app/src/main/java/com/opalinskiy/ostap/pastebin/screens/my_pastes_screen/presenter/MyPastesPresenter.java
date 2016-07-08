@@ -54,7 +54,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
         parameters.put("api_user_key", userKey);
         parameters.put("api_option", "list");
         final List<Paste> myPastes = new LinkedList<>();
-        model.getUsersPastes(parameters, new OnLoadFinishedListener() {
+        model.getPastes(parameters, new OnLoadFinishedListener() {
             @Override
             public void onSuccess(Object object) {
                 PasteList pasteList = (PasteList) object;
@@ -77,7 +77,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_option", "trends");
         final List<Paste> myPastes = new LinkedList<>();
-        model.getListOfTrendingPastes(parameters, new OnLoadFinishedListener() {
+        model.getPastes(parameters, new OnLoadFinishedListener() {
 
             @Override
             public void onSuccess(Object object) {

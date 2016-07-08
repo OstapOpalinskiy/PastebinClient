@@ -14,22 +14,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.XML;
 
-import java.io.InputStream;
 import java.lang.reflect.Type;
-import java.util.Scanner;
-
-import okhttp3.ResponseBody;
-import retrofit2.Response;
 
 
 public  class ConverterUtils {
 
-    public  PasteList responseBodyToPasteList(Response<ResponseBody> response){
-        String myString = getString(response);
+    public  PasteList responseBodyToPasteList(String response){
 
         JSONObject xmlJSONObj = null;
         try {
-            xmlJSONObj = XML.toJSONObject(myString);
+            xmlJSONObj = XML.toJSONObject(response);
             Log.d(Constants.TAG, "XML: ");
         } catch (JSONException je) {
             je.printStackTrace();
@@ -40,11 +34,16 @@ public  class ConverterUtils {
         PasteList pasteList = null;
         try{
             Type type = new TypeToken<PasteList>() {}.getType();
-            pasteList = gson.fromJson(xmlJSONObj.toString(), type);
+            if (xmlJSONObj != null) {
+                pasteList = gson.fromJson(xmlJSONObj.toString(), type);
+            }
         }catch (Exception e){
             e.printStackTrace();
             Type type = new TypeToken<Paste>() {}.getType();
-            String jsonString = xmlJSONObj.toString().substring(9, xmlJSONObj.toString().length() - 1);
+            String jsonString = null;
+            if (xmlJSONObj != null) {
+                jsonString = xmlJSONObj.toString().substring(9, xmlJSONObj.toString().length() - 1);
+            }
             Paste paste = gson.fromJson(jsonString, type);
             pasteList = new PasteList();
             pasteList.addPaste(paste);
@@ -54,12 +53,11 @@ public  class ConverterUtils {
     }
 
 
-    public  User responseBodyToUser(Response<ResponseBody> response){
-        String myString = getString(response);
+    public  User responseBodyToUser(String response){
 
         JSONObject xmlJSONObj = null;
         try {
-            xmlJSONObj = XML.toJSONObject(myString);
+            xmlJSONObj = XML.toJSONObject(response);
         } catch (JSONException je) {
             je.printStackTrace();
             Log.d(Constants.TAG, "Error");
@@ -67,12 +65,10 @@ public  class ConverterUtils {
 
         Gson gson = new Gson();
         Type type = new TypeToken<UserResponse>() {}.getType();
-        UserResponse userResponse = gson.fromJson(xmlJSONObj.toString(), type);
+        UserResponse userResponse = null;
+        if (xmlJSONObj != null) {
+            userResponse = gson.fromJson(xmlJSONObj.toString(), type);
+        }
         return userResponse.getUser();
-    }
-
-    private String getString(Response<ResponseBody> response) {
-        InputStream is = response.body().byteStream();
-        return new Scanner(is, "UTF-8").useDelimiter("\\A").next();
     }
 }

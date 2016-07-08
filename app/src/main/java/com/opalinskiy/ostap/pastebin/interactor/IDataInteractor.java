@@ -12,9 +12,7 @@ public interface IDataInteractor {
 
     void getRawPasteCode(String pasteUrl, final OnLoadFinishedListener listener);
 
-    void getUsersPastes(Map<String, String> parameters, OnLoadFinishedListener listener);
-
-    void getListOfTrendingPastes(Map<String, String> parameters, final OnLoadFinishedListener listener);
+    void getPastes(Map<String, String> parameters, OnLoadFinishedListener listener);
 
     void deletePaste(Map<String, String> parameters, final OnLoadFinishedListener listener);
 

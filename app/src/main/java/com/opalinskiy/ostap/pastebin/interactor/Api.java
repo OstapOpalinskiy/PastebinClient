@@ -22,7 +22,7 @@ public interface Api {
 
         @FormUrlEncoded
         @POST("api/api_post.php")
-        Call<ResponseBody> getListOfPastes(@FieldMap Map<String, String> map);
+        Call<String> getListOfPastes(@FieldMap Map<String, String> map);
 
         @POST("raw/{pasteCode}")
         Call<String> getRawPasteCode(@Path("pasteCode")String pasteCode);
@@ -33,5 +33,5 @@ public interface Api {
 
         @FormUrlEncoded
         @POST("api/api_post.php")
-        Call<ResponseBody> getUser(@FieldMap Map<String, String> map);
+        Call<String> getUser(@FieldMap Map<String, String> map);
 }
