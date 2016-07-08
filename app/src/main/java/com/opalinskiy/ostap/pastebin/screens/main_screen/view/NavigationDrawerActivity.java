@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
@@ -124,6 +125,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     }
 
     public void commitFragment(Fragment fragment, String tag, boolean addToBackStack) {
+        clearBackStack();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) {
             transaction.addToBackStack(tag);
@@ -132,6 +134,16 @@ public class NavigationDrawerActivity extends AppCompatActivity
                 .replace(R.id.container, fragment, tag)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                 .commit();
+    }
+
+    public void clearBackStack() {
+        int entryCount = getSupportFragmentManager().getBackStackEntryCount();
+        if (entryCount <= 0)
+            return;
+
+        FragmentManager.BackStackEntry entry = getSupportFragmentManager().getBackStackEntryAt(0);
+        int id = entry.getId();
+        getSupportFragmentManager().popBackStackImmediate(id, FragmentManager.POP_BACK_STACK_INCLUSIVE);
     }
 
     @Override
