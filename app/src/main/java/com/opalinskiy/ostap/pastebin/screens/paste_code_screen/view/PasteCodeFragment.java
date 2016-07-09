@@ -40,6 +40,7 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
 
     @Override
     public void onResume() {
+        presenter = new PasteCodePresenter(this, getActivity());
         getActivity().setTitle(getResources().getString(R.string.paste_code));
         super.onResume();
     }
@@ -69,10 +70,11 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
         if (presenter != null) {
             presenter.onDestroy();
         }
-        super.onDestroy();
+        super.onStop();
     }
+
 }

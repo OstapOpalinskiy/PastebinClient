@@ -1,5 +1,6 @@
 package com.opalinskiy.ostap.pastebin.screens.new_paste_screen.presenter;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,9 +42,9 @@ public class NewPastePresenter implements INewPaste.IPresenter {
 
     @Override
     public void restoreState(Bundle bundle) {
-        if(bundle != null){
+        if (bundle != null) {
             boolean isLinkShown = bundle.getBoolean(Constants.IS_LINK_SHOWN_KEY);
-            if(isLinkShown){
+            if (isLinkShown) {
                 view.showLink(bundle.getString(Constants.LINK_KEY));
             }
         }
@@ -94,7 +95,10 @@ public class NewPastePresenter implements INewPaste.IPresenter {
 
     @Override
     public void openLink(Context context, Intent intent) {
-        context.startActivity(intent);
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
     }
-
 }

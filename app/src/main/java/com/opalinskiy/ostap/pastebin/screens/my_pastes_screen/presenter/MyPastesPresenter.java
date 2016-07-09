@@ -2,6 +2,7 @@ package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
@@ -72,6 +73,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void getTrends() {
+        Log.d("log111", "getTrends()");
         view.startProgress("Please wait...", "Pastes is loading.");
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
@@ -83,8 +85,9 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             public void onSuccess(Object object) {
                 PasteList pasteList = (PasteList) object;
                 myPastes.addAll(pasteList.getPasteList());
-                view.setUsersList(myPastes);
-                view.stopProgress();
+                Log.d("log111", "getTrends onSuccess()");
+                    view.setUsersList(myPastes);
+                    view.stopProgress();
             }
 
             @Override

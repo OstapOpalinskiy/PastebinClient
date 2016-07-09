@@ -43,7 +43,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         presenter.setData(preferences);
         if (savedInstanceState == null) {
             NewPasteFragment fragment = new NewPasteFragment();
-            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false, false);
+            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
         }
     }
 
@@ -95,26 +95,26 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_new_paste) {
             NewPasteFragment fragment = new NewPasteFragment();
-            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false, true);
+            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
 
         } else if (id == R.id.nav_trending) {
             MyPastesFragment fragment = new MyPastesFragment();
             args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.TRENDING_PASTES);
             fragment.setArguments(args);
-            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, true, false);
+            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false);
 
         } else if (id == R.id.nav_my_pastes) {
             MyPastesFragment fragment = new MyPastesFragment();
             args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.MY_PASTES);
             fragment.setArguments(args);
-            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, true, false);
+            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false);
 
         } else if (id == R.id.nav_profile) {
             ProfileFragment fragment = new ProfileFragment();
-            commitFragment(fragment, Constants.PROFILE_FRAGMENT_TAG, false, true);
+            commitFragment(fragment, Constants.PROFILE_FRAGMENT_TAG, false);
         } else if (id == R.id.nav_log_in) {
             LoginFragment fragment = new LoginFragment();
-            commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, false, true);
+            commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, false);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -124,14 +124,13 @@ public class NavigationDrawerActivity extends AppCompatActivity
         return true;
     }
 
-    public void commitFragment(Fragment fragment, String tag, boolean addToBackStack,boolean clearBackStack) {
+    public void commitFragment(Fragment fragment, String tag, boolean addToBackStack) {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        if(clearBackStack){
-            clearBackStack();
-        }
         if (addToBackStack) {
             transaction.addToBackStack(tag);
+        } else {
+            clearBackStack();
         }
         transaction
                 .replace(R.id.container, fragment, tag)
@@ -166,7 +165,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     public void setLoginScreen() {
         avatar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.guest_white));
         name.setText(R.string.guest);
-        commitFragment(new LoginFragment(), Constants.LOGIN_FRAGMENT_TAG, false, true);
+        commitFragment(new LoginFragment(), Constants.LOGIN_FRAGMENT_TAG, false);
     }
 
     @Override
@@ -178,7 +177,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     @Override
     public void setProfileScreen() {
         presenter.setData(preferences);
-        commitFragment(new ProfileFragment(), Constants.PROFILE_FRAGMENT_TAG, false, true);
+        commitFragment(new ProfileFragment(), Constants.PROFILE_FRAGMENT_TAG, false);
     }
 
     @Override
@@ -186,6 +185,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
         Toast.makeText(NavigationDrawerActivity.this, msg,
                 Toast.LENGTH_LONG).show();
     }
+
 
     @Override
     protected void onDestroy() {

@@ -24,7 +24,6 @@ public  class ConverterUtils {
         JSONObject xmlJSONObj = null;
         try {
             xmlJSONObj = XML.toJSONObject(response);
-            Log.d(Constants.TAG, "XML: ");
         } catch (JSONException je) {
             je.printStackTrace();
             Log.d(Constants.TAG, "Error");

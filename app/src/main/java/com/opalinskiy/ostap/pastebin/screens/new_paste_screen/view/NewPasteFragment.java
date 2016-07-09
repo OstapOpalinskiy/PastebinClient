@@ -57,10 +57,8 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.d(Constants.TAG, "is bundle null:" + (outState == null));
-        Log.d(Constants.TAG, "is tvLink null:" + (tvLink == null));
-        outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);
-        outState.putString(Constants.LINK_KEY, tvLink.getText().toString());
+            outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);
+            outState.putString(Constants.LINK_KEY, tvLink.getText().toString());
         super.onSaveInstanceState(outState);
     }
 
