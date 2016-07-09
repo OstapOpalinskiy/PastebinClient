@@ -1,8 +1,10 @@
 package com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view;
 
+import android.app.ApplicationErrorReport;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,7 +62,11 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
 
     @Override
     public void setCode(String code) {
-        getActivity().setTitle(getResources().getString(R.string.paste_code));
+        if(isAdded()){
+            getActivity().setTitle(getResources().getString(R.string.paste_code));
+        }else{
+            Log.d(Constants.TAG, "Error!!!!! Fragment NOT Added yet!!!!");
+        }
         tvCode.setText(code);
     }
 
