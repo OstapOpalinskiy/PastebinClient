@@ -17,11 +17,18 @@ public class BaseFragment extends Fragment implements IBaseFragment {
 
     @Override
     public void stopProgress() {
-        ringProgress.cancel();
+        if(ringProgress != null){
+            ringProgress.cancel();
+        }
     }
 
     @Override
     public void showMessage(String msg) {
         Toast.makeText(getActivity(), msg, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void setTitle(String title) {
+        getActivity().setTitle(title);
     }
 }

@@ -30,7 +30,7 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
         initViews(view);
 
         final SharedPreferences prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = new LoginPresenter((IMainScreen.IView) getActivity(), getActivity());
+        presenter = new LoginPresenter((IMainScreen.IView) getActivity());
         tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +51,13 @@ public class LoginFragment extends BaseFragment implements ILoginScreen.ILoginVi
 
     @Override
     public void onResume() {
-        getActivity().setTitle(getResources().getString(R.string.login));
+        setTitle(getResources().getString(R.string.login));
         super.onResume();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopProgress();
     }
 }

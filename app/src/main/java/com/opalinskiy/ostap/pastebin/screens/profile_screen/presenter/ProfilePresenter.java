@@ -1,6 +1,5 @@
 package com.opalinskiy.ostap.pastebin.screens.profile_screen.presenter;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -24,9 +23,9 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
     private IProfileScreen.IProfileView view;
     private IDataInteractor model;
 
-    public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView, Context context) {
-        mainPresenter = MainScreenPresenter.getInstance(mainView, context);
-        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+    public ProfilePresenter(IProfileScreen.IProfileView view, IMainScreen.IView mainView) {
+        mainPresenter = new MainScreenPresenter(mainView);
+        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.view = view;
     }
 
@@ -45,11 +44,9 @@ public class ProfilePresenter implements IProfileScreen.IPresenter {
         parameters.put("api_user_key", userKey);
         parameters.put("api_option", "userdetails");
 
-        model.getUser(parameters, new OnLoadFinishedListener() {
+        model.getUser(parameters, new OnLoadFinishedListener<User>() {
             @Override
-            public void onSuccess(Object object) {
-                Log.d(Constants.TAG, "loadUser() onSuccess():  " + object);
-                User user = (User) object;
+            public void onSuccess(User user) {
                 if (user != null) {
                     view.showUser(user);
                     SharedPreferences.Editor ed = prefs.edit();

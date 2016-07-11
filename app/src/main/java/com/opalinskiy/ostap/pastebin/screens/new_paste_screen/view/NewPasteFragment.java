@@ -52,6 +52,7 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
         setHasOptionsMenu(true);
         setRetainInstance(true);
         presenter.restoreState(savedInstanceState);
+        Log.d(Constants.TAG1, "NEW PASTE onCreateView()");
         return view;
     }
 
@@ -81,7 +82,7 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     }
 
     private void init(View view) {
-        presenter = new NewPastePresenter(this, getActivity());
+        presenter = new NewPastePresenter(this);
         etCode = (EditText) view.findViewById(R.id.et_code_MSF);
 
         View bottomSheet = view.findViewById(R.id.bottom_sheet_view);
@@ -109,7 +110,7 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
 
     @Override
     public void onResume() {
-        getActivity().setTitle(getResources().getString(R.string.new_paste));
+        setTitle(getResources().getString(R.string.new_paste));
         super.onResume();
     }
 
@@ -187,7 +188,14 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
+        super.onStop();
+        stopProgress();
+    }
+
+    @Override
+    public void onDestroyView() {
+        Log.d(Constants.TAG1, "NEW PASTE onDestroyView()");
         if (presenter != null) {
             presenter.onDestroy();
         }

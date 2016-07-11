@@ -29,38 +29,32 @@ public class MyPastesFragment extends BaseFragment
     private int myOrTrending;
     private SharedPreferences prefs;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container
             , @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_pastes_fragment, container, false);
         init(view);
+        Log.d(Constants.TAG1, "TRENDING FRAGMENT onCreateView()");
+        presenter = new MyPastesPresenter(this, myOrTrending);
+        presenter.choseTitle(myOrTrending);
         presenter.showMyPastes(prefs);
         return view;
+    }
+
+    public static PasteCodeFragment newInstance(String url, int myOrTrending) {
+        Bundle args = new Bundle();
+        args.putString(Constants.URL_KEY, url);
+        args.putInt(Constants.MY_OR_TRANDING_KEY, myOrTrending);
+        PasteCodeFragment fragment = new PasteCodeFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     private void init(View view) {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView_MPF);
         myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
         prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = new MyPastesPresenter(this, myOrTrending, getActivity());
-    }
-
-    @Override
-    public void onResume() {
-        if (myOrTrending == Constants.MY_PASTES) {
-            getActivity().setTitle(getResources().getString(R.string.my_pastes));
-        } else {
-            getActivity().setTitle(getResources().getString(R.string.trendings));
-        }
-        presenter = new MyPastesPresenter(this, myOrTrending, getActivity());
-        super.onResume();
-    }
-
-    @Override
-    public void setUsersList(List<Paste> myPastes) {
-        setDataToRecyclerView(myPastes);
     }
 
     @Override
@@ -68,33 +62,33 @@ public class MyPastesFragment extends BaseFragment
         Toast.makeText(getActivity(), R.string.you_need_login, Toast.LENGTH_SHORT).show();
     }
 
-    private void setDataToRecyclerView(List<Paste> myPastes) {
-        if (myPastes.size() > 0) {
-            MyPastesAdapter adapter = new MyPastesAdapter(myPastes, this);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-            recyclerView.setAdapter(adapter);
-            recyclerView.setLayoutManager(linearLayoutManager);
-        } else {
-            Toast.makeText(getActivity(), R.string.no_pastes_yet, Toast.LENGTH_SHORT).show();
-        }
+    @Override
+    public void setDataToRecyclerView(List<Paste> myPastes) {
+        MyPastesAdapter adapter = new MyPastesAdapter(myPastes, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     @Override
     public void onItemClick(String url) {
-        PasteCodeFragment fragment = new PasteCodeFragment();
-        Bundle args = new Bundle();
-        args.putString(Constants.URL_KEY, url);
-        args.putInt(Constants.MY_OR_TRANDING_KEY, myOrTrending);
-        fragment.setArguments(args);
+        PasteCodeFragment fragment = newInstance(url, myOrTrending);
         ((NavigationDrawerActivity) getActivity()).commitFragment(fragment
-                , Constants.MY_PASTES_CODE_FRAGMENT_TAG, true);
+                , Constants.MY_PASTES_CODE_FRAGMENT_TAG, true, false);
     }
 
     @Override
     public void onStop() {
+        super.onStop();
+        stopProgress();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(Constants.TAG1, "TRENDING FRAGMENT onDestroyView()");
         if (presenter != null) {
             presenter.onDestroy();
         }
-        super.onStop();
     }
 }

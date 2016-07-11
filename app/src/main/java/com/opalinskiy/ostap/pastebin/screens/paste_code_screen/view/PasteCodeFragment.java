@@ -1,6 +1,5 @@
 package com.opalinskiy.ostap.pastebin.screens.paste_code_screen.view;
 
-import android.app.ApplicationErrorReport;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -30,20 +29,19 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.paste_code_fragment, container, false);
         tvCode = (TextView) view.findViewById(R.id.tv_code_PCF);
-        presenter = new PasteCodePresenter(this, getActivity());
         url = getArguments().getString(Constants.URL_KEY);
         int myOrTrending = getArguments().getInt(Constants.MY_OR_TRANDING_KEY);
         if (myOrTrending == Constants.MY_PASTES) {
             setHasOptionsMenu(true);
         }
+        presenter = new PasteCodePresenter(this);
         presenter.getCode(url);
         return view;
     }
 
     @Override
     public void onResume() {
-        presenter = new PasteCodePresenter(this, getActivity());
-        getActivity().setTitle(getResources().getString(R.string.paste_code));
+        setTitle(getResources().getString(R.string.paste_code));
         super.onResume();
     }
 
@@ -76,10 +74,16 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
     }
 
     @Override
-    public void onStop() {
+    public void onDestroyView() {
         if (presenter != null) {
             presenter.onDestroy();
         }
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onStop() {
+        stopProgress();
         super.onStop();
     }
 

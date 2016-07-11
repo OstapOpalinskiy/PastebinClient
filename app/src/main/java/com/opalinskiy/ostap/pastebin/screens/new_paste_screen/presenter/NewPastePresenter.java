@@ -25,9 +25,9 @@ public class NewPastePresenter implements INewPaste.IPresenter {
     public static final Map<String, String> expirationMap = new HashMap<>();
     public static final Map<String, String> exposureMap = new HashMap<>();
 
-    public NewPastePresenter(INewPaste.IView view, Context context) {
+    public NewPastePresenter(INewPaste.IView view) {
         this.view = view;
-        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        this.model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         expirationMap.put("Never", "N");
         expirationMap.put("10 Minutes", "10M");
         expirationMap.put("1 Hour", "1H");
@@ -63,17 +63,15 @@ public class NewPastePresenter implements INewPaste.IPresenter {
             parameters.put("api_paste_expire_date", expirationMap.get(expiration));
             parameters.put("api_paste_private", exposureMap.get(exposure));
 
-            model.postPaste(parameters, new OnLoadFinishedListener() {
+            model.postPaste(parameters, new OnLoadFinishedListener<String>() {
                 @Override
-                public void onSuccess(Object object) {
-                    view.showLink(object.toString());
-                    Log.d(Constants.TAG, "after show link");
+                public void onSuccess(String msg) {
+                    view.showLink(msg);
                     view.stopProgress();
                 }
 
                 @Override
                 public void onFailure(String msg) {
-                    Log.d(Constants.TAG, "onFailure() in onPostPaste()");
                     view.showMessage(msg);
                     view.stopProgress();
                 }

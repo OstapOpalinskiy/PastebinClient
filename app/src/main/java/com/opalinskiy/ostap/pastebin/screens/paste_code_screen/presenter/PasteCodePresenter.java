@@ -1,6 +1,5 @@
 package com.opalinskiy.ostap.pastebin.screens.paste_code_screen.presenter;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -21,9 +20,9 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     private IPasteCodeScreen.IView view;
 
 
-    public PasteCodePresenter(IPasteCodeScreen.IView view, Context context) {
+    public PasteCodePresenter(IPasteCodeScreen.IView view) {
         this.view = view;
-        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
     }
 
     @Override
@@ -31,18 +30,22 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
         view.startProgress("Please wait...", "Paste code is loading.");
         String pasteKey = url.substring(Constants.BASE_URL.length());
 
-        model.getRawPasteCode(pasteKey, new OnLoadFinishedListener() {
+        model.getRawPasteCode(pasteKey, new OnLoadFinishedListener<String>() {
 
             @Override
-            public void onSuccess(Object object) {
-                view.stopProgress();
-                view.setCode(object.toString());
+            public void onSuccess(String msg) {
+                if(view != null){
+                    view.stopProgress();
+                    view.setCode(msg);
+                }
             }
 
             @Override
             public void onFailure(String msg) {
-                view.stopProgress();
-                view.showMessage(msg);
+                if(view != null){
+                    view.stopProgress();
+                    view.showMessage(msg);
+                }
             }
         });
     }
@@ -51,18 +54,18 @@ public class PasteCodePresenter implements IPasteCodeScreen.IPresenter {
     public void deletePaste(String url, SharedPreferences preferences) {
         String pasteKey = url.substring(Constants.BASE_URL.length());
         String userKey = preferences.getString(Constants.USER_KEY_TAG, "");
+
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_user_key", userKey);
         parameters.put("api_option", "delete");
         parameters.put("api_paste_key", pasteKey);
 
-        model.deletePaste(parameters, new OnLoadFinishedListener() {
+        model.deletePaste(parameters, new OnLoadFinishedListener<String>() {
 
             @Override
-            public void onSuccess(Object object) {
-                Log.d(Constants.TAG, "Paste deleted!!! " + object);
-                view.onDeletePaste(object + "");
+            public void onSuccess(String msg) {
+                view.onDeletePaste(msg);
             }
 
             @Override

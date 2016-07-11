@@ -43,13 +43,13 @@ public class NavigationDrawerActivity extends AppCompatActivity
         presenter.setData(preferences);
         if (savedInstanceState == null) {
             NewPasteFragment fragment = new NewPasteFragment();
-            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
+            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false, false);
         }
     }
 
     protected void init() {
         preferences = getSharedPreferences(Constants.PREFS_NAME, 0);
-        presenter = MainScreenPresenter.getInstance(this, this);
+        presenter = new MainScreenPresenter(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -95,26 +95,26 @@ public class NavigationDrawerActivity extends AppCompatActivity
 
         if (id == R.id.nav_new_paste) {
             NewPasteFragment fragment = new NewPasteFragment();
-            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false);
+            commitFragment(fragment, Constants.MAIN_SCREEN_FRAGMENT_TAG, false, true);
 
         } else if (id == R.id.nav_trending) {
             MyPastesFragment fragment = new MyPastesFragment();
             args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.TRENDING_PASTES);
             fragment.setArguments(args);
-            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false);
+            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false, true);
 
         } else if (id == R.id.nav_my_pastes) {
             MyPastesFragment fragment = new MyPastesFragment();
             args.putInt(Constants.MY_OR_TRANDING_KEY, Constants.MY_PASTES);
             fragment.setArguments(args);
-            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false);
+            commitFragment(fragment, Constants.MY_PASTES_FRAGMENT_TAG, false, true);
 
         } else if (id == R.id.nav_profile) {
             ProfileFragment fragment = new ProfileFragment();
-            commitFragment(fragment, Constants.PROFILE_FRAGMENT_TAG, false);
+            commitFragment(fragment, Constants.PROFILE_FRAGMENT_TAG, false, true);
         } else if (id == R.id.nav_log_in) {
             LoginFragment fragment = new LoginFragment();
-            commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, false);
+            commitFragment(fragment, Constants.LOGIN_FRAGMENT_TAG, false, true);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -124,12 +124,13 @@ public class NavigationDrawerActivity extends AppCompatActivity
         return true;
     }
 
-    public void commitFragment(Fragment fragment, String tag, boolean addToBackStack) {
+    public void commitFragment(Fragment fragment, String tag, boolean addToBackStack, boolean clearBackStack) {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (addToBackStack) {
             transaction.addToBackStack(tag);
-        } else {
+        }
+        if(clearBackStack) {
             clearBackStack();
         }
         transaction
@@ -165,7 +166,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     public void setLoginScreen() {
         avatar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.guest_white));
         name.setText(R.string.guest);
-        commitFragment(new LoginFragment(), Constants.LOGIN_FRAGMENT_TAG, false);
+        commitFragment(new LoginFragment(), Constants.LOGIN_FRAGMENT_TAG, false, true);
     }
 
     @Override
@@ -177,7 +178,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
     @Override
     public void setProfileScreen() {
         presenter.setData(preferences);
-        commitFragment(new ProfileFragment(), Constants.PROFILE_FRAGMENT_TAG, false);
+        commitFragment(new ProfileFragment(), Constants.PROFILE_FRAGMENT_TAG, false, true);
     }
 
     @Override

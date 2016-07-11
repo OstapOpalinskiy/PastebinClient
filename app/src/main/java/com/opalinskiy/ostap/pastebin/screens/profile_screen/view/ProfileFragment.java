@@ -36,7 +36,7 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment, container, false);
         initViews(view);
-        presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity(), getActivity());
+        presenter = new ProfilePresenter(this, (IMainScreen.IView) getActivity());
         prefs = getActivity().getSharedPreferences(Constants.PREFS_NAME, 0);
         tvLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +50,7 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
     @Override
     public void onResume() {
         presenter.loadData(prefs);
-        getActivity().setTitle(getResources().getString(R.string.profile));
+        setTitle(getResources().getString(R.string.profile));
         super.onResume();
     }
 
@@ -91,7 +91,13 @@ public class ProfileFragment extends BaseFragment implements IProfileScreen.IPro
     }
 
     @Override
-    public void onDestroy() {
+    public void onStop() {
+        stopProgress();
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroyView() {
         if (presenter != null) {
             presenter.onDestroy();
         }

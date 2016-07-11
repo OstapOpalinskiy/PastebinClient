@@ -17,11 +17,16 @@ public interface IMyPastesScreen {
 
         void showMyPastes(SharedPreferences prefs);
 
+        void choseTitle(int myOrTrending);
+
+        void setUsersList(List<Paste> list);
+
         void onDestroy();
     }
 
     interface IView extends IBaseFragment {
-        void setUsersList(List<Paste> list);
+        void setDataToRecyclerView(List<Paste> myPastes);
+
         void showMessage();
     }
 

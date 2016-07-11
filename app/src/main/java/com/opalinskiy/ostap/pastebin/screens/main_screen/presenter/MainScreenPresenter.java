@@ -1,6 +1,5 @@
 package com.opalinskiy.ostap.pastebin.screens.main_screen.presenter;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,22 +18,12 @@ import java.util.Map;
 
 
 public class MainScreenPresenter implements IMainScreen.IPresenter {
-    private static MainScreenPresenter instance;
     private IMainScreen.IView view;
     private IDataInteractor model;
 
-    private MainScreenPresenter(final IMainScreen.IView view, Context context) {
+    public MainScreenPresenter(final IMainScreen.IView view) {
         this.view = view;
-        this.model =DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
-    }
-
-    public static MainScreenPresenter getInstance(IMainScreen.IView view, Context context) {
-        if (instance == null) {
-            instance = new MainScreenPresenter(view, context);
-        } else {
-            instance.setView(view);
-        }
-        return instance;
+        this.model =DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
     }
 
     @Override
@@ -47,11 +36,10 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         parameters.put("api_user_key", userKey);
         parameters.put("api_option", "userdetails");
 
-        model.getUser(parameters, new OnLoadFinishedListener() {
+        model.getUser(parameters, new OnLoadFinishedListener <User>() {
             @Override
-            public void onSuccess(Object object) {
-                Log.d(Constants.TAG, "loadUser() onSuccess():  " + object);
-                User user = (User) object;
+            public void onSuccess(User user) {
+                Log.d(Constants.TAG, "loadUser() onSuccess():  " + user);
                 if (user != null) {
                     setUserInfo(user);
                 }
@@ -82,14 +70,12 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
         parameters.put("api_user_password", password);
 
         Log.d(Constants.TAG, "loadUserKey " + "login " + login + "password " + password);
-        model.getUserKey(parameters, new OnLoadFinishedListener() {
+        model.getUserKey(parameters, new OnLoadFinishedListener<String>()  {
             @Override
-            public void onSuccess(Object object) {
-                String userKey = object.toString();
+            public void onSuccess(String userKey) {
                 if (userKey.equals(Constants.WRONG_PASSWORD_RESPONSE)) {
-                    view.showMessage(object.toString());
+                    view.showMessage(userKey);
                 } else {
-                    Log.d(Constants.TAG, "loadUserKey() onSuccess(), userKey:" + userKey);
                     SharedPreferences.Editor ed = prefs.edit();
                     ed.putString(Constants.USER_KEY_TAG, userKey);
                     ed.apply();
@@ -146,10 +132,4 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
         loadUserKey(prefs, true);
     }
-
-
-    private void setView(IMainScreen.IView view) {
-        this.view = view;
-    }
-
 }

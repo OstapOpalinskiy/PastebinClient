@@ -12,8 +12,8 @@ import com.opalinskiy.ostap.pastebin.screens.main_screen.presenter.MainScreenPre
 public class LoginPresenter implements ILoginScreen.IPresenter {
     IMainScreen.IPresenter mainPresenter;
 
-    public LoginPresenter(IMainScreen.IView view, Context context) {
-        mainPresenter = MainScreenPresenter.getInstance(view, context);
+    public LoginPresenter(IMainScreen.IView view) {
+        mainPresenter = new MainScreenPresenter(view);
     }
 
     @Override

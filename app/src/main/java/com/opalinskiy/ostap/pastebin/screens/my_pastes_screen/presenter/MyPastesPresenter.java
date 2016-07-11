@@ -1,9 +1,11 @@
 package com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.presenter;
 
-import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.util.Log;
 
+import com.opalinskiy.ostap.pastebin.Application;
+import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
 import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
@@ -26,9 +28,9 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private int myOrTrending;
 
 
-    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending, Context context) {
+    public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
         this.view = view;
-        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils(), context);
+        model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.myOrTrending = myOrTrending;
     }
 
@@ -48,6 +50,16 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     }
 
     @Override
+    public void choseTitle(int myOrTrending) {
+        Resources r = Application.getContext().getResources();
+        if (myOrTrending == Constants.MY_PASTES) {
+            view.setTitle(r.getString(R.string.my_pastes));
+        } else {
+            view.setTitle(r.getString(R.string.trendings));
+        }
+    }
+
+    @Override
     public void getMyPastes(String userKey) {
         view.startProgress("Please wait...", "Pastes is loading.");
         Map<String, String> parameters = new HashMap<>();
@@ -55,12 +67,11 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
         parameters.put("api_user_key", userKey);
         parameters.put("api_option", "list");
         final List<Paste> myPastes = new LinkedList<>();
-        model.getPastes(parameters, new OnLoadFinishedListener() {
+        model.getPastes(parameters, new OnLoadFinishedListener<PasteList>() {
             @Override
-            public void onSuccess(Object object) {
-                PasteList pasteList = (PasteList) object;
+            public void onSuccess(PasteList pasteList) {
                 myPastes.addAll(pasteList.getPasteList());
-                view.setUsersList(myPastes);
+                setUsersList(myPastes);
                 view.stopProgress();
             }
 
@@ -73,21 +84,22 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void getTrends() {
-        Log.d("log111", "getTrends()");
+        Log.d(Constants.TAG1, "TRENDING PRESENTER getTrends()");
         view.startProgress("Please wait...", "Pastes is loading.");
         Map<String, String> parameters = new HashMap<>();
         parameters.put("api_dev_key", Constants.API_DEV_KEY);
         parameters.put("api_option", "trends");
         final List<Paste> myPastes = new LinkedList<>();
-        model.getPastes(parameters, new OnLoadFinishedListener() {
+        model.getPastes(parameters, new OnLoadFinishedListener<PasteList>() {
 
             @Override
-            public void onSuccess(Object object) {
-                PasteList pasteList = (PasteList) object;
+            public void onSuccess(PasteList pasteList) {
                 myPastes.addAll(pasteList.getPasteList());
-                Log.d("log111", "getTrends onSuccess()");
-                    view.setUsersList(myPastes);
-                    view.stopProgress();
+                Log.d(Constants.TAG1, "TRENDING PRESENTER callback onSuccess()" );
+                    if(view != null){
+                        setUsersList(myPastes);
+                        view.stopProgress();
+                    }
             }
 
             @Override
@@ -100,6 +112,16 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private void showErrorMsg(String msg) {
         view.showMessage(msg);
         view.stopProgress();
+    }
+
+    @Override
+    public void setUsersList(List<Paste> myPastes) {
+        Log.d(Constants.TAG1, "TRENDING PRESENTER setUserList()" );
+        if (myPastes.size() > 0) {
+            view.setDataToRecyclerView(myPastes);
+        } else {
+            view.showMessage(Application.getContext().getString(R.string.no_pastes_yet));
+        }
     }
 
     @Override
