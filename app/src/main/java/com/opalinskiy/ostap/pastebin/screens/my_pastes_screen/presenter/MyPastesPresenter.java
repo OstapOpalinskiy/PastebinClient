@@ -11,6 +11,7 @@ import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
+import com.opalinskiy.ostap.pastebin.interactor.RequestParams;
 import com.opalinskiy.ostap.pastebin.interactor.models.Paste;
 import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
@@ -26,12 +27,14 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     private IDataInteractor model;
     private IMyPastesScreen.IView view;
     private int myOrTrending;
+    private RequestParams parameters;
 
 
     public MyPastesPresenter(IMyPastesScreen.IView view, int myOrTrending) {
         this.view = view;
         model = DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
         this.myOrTrending = myOrTrending;
+        parameters = new RequestParams();
     }
 
     @Override
@@ -62,12 +65,8 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     @Override
     public void getMyPastes(String userKey) {
         view.startProgress("Please wait...", "Pastes is loading.");
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("api_dev_key", Constants.API_DEV_KEY);
-        parameters.put("api_user_key", userKey);
-        parameters.put("api_option", "list");
         final List<Paste> myPastes = new LinkedList<>();
-        model.getPastes(parameters, new OnLoadFinishedListener<PasteList>() {
+        model.getPastes(parameters.getMyPastesParams(), new OnLoadFinishedListener<PasteList>() {
             @Override
             public void onSuccess(PasteList pasteList) {
                 myPastes.addAll(pasteList.getPasteList());
@@ -86,20 +85,17 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     public void getTrends() {
         Log.d(Constants.TAG1, "TRENDING PRESENTER getTrends()");
         view.startProgress("Please wait...", "Pastes is loading.");
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("api_dev_key", Constants.API_DEV_KEY);
-        parameters.put("api_option", "trends");
         final List<Paste> myPastes = new LinkedList<>();
-        model.getPastes(parameters, new OnLoadFinishedListener<PasteList>() {
+        model.getPastes(parameters.getTrendsParams(), new OnLoadFinishedListener<PasteList>() {
 
             @Override
             public void onSuccess(PasteList pasteList) {
                 myPastes.addAll(pasteList.getPasteList());
-                Log.d(Constants.TAG1, "TRENDING PRESENTER callback onSuccess()" );
-                    if(view != null){
-                        setUsersList(myPastes);
-                        view.stopProgress();
-                    }
+                Log.d(Constants.TAG1, "TRENDING PRESENTER callback onSuccess()");
+                if (view != null) {
+                    setUsersList(myPastes);
+                    view.stopProgress();
+                }
             }
 
             @Override
@@ -116,7 +112,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
 
     @Override
     public void setUsersList(List<Paste> myPastes) {
-        Log.d(Constants.TAG1, "TRENDING PRESENTER setUserList()" );
+        Log.d(Constants.TAG1, "TRENDING PRESENTER setUserList()");
         if (myPastes.size() > 0) {
             view.setDataToRecyclerView(myPastes);
         } else {

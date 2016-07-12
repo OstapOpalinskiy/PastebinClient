@@ -9,6 +9,7 @@ import com.opalinskiy.ostap.pastebin.interactor.ConnectProvider;
 import com.opalinskiy.ostap.pastebin.interactor.DataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.IDataInteractor;
 import com.opalinskiy.ostap.pastebin.interactor.OnLoadFinishedListener;
+import com.opalinskiy.ostap.pastebin.interactor.RequestParams;
 import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
@@ -20,23 +21,17 @@ import java.util.Map;
 public class MainScreenPresenter implements IMainScreen.IPresenter {
     private IMainScreen.IView view;
     private IDataInteractor model;
+    private RequestParams parameters;
 
     public MainScreenPresenter(final IMainScreen.IView view) {
         this.view = view;
         this.model =DataInteractor.getInstance(ConnectProvider.getInstance().getRetrofit(), new ConverterUtils());
+        parameters = new RequestParams();
     }
 
     @Override
     public void loadUser(final SharedPreferences prefs, final boolean userChanged) {
-
-        String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
-
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("api_dev_key", Constants.API_DEV_KEY);
-        parameters.put("api_user_key", userKey);
-        parameters.put("api_option", "userdetails");
-
-        model.getUser(parameters, new OnLoadFinishedListener <User>() {
+        model.getUser(parameters.getUserParams(), new OnLoadFinishedListener <User>() {
             @Override
             public void onSuccess(User user) {
                 Log.d(Constants.TAG, "loadUser() onSuccess():  " + user);
@@ -61,16 +56,7 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void loadUserKey(final SharedPreferences prefs, final boolean userChanged) {
-        String login = prefs.getString(Constants.LOGIN_KEY, "");
-        String password = prefs.getString(Constants.PASSWORD_KEY, "");
-
-        Map<String, String> parameters = new HashMap<>();
-        parameters.put("api_dev_key", Constants.API_DEV_KEY);
-        parameters.put("api_user_name", login);
-        parameters.put("api_user_password", password);
-
-        Log.d(Constants.TAG, "loadUserKey " + "login " + login + "password " + password);
-        model.getUserKey(parameters, new OnLoadFinishedListener<String>()  {
+        model.getUserKey(parameters.getUserKeyParams(), new OnLoadFinishedListener<String>()  {
             @Override
             public void onSuccess(String userKey) {
                 if (userKey.equals(Constants.WRONG_PASSWORD_RESPONSE)) {
@@ -97,8 +83,8 @@ public class MainScreenPresenter implements IMainScreen.IPresenter {
 
     @Override
     public void setUserInfo(User user) {
-        view.setAvatar(user.getUserAvatarUrl());
-        view.setUserName(user.getUserName());
+            view.setAvatar(user.getUserAvatarUrl());
+            view.setUserName(user.getUserName());
     }
 
     @Override

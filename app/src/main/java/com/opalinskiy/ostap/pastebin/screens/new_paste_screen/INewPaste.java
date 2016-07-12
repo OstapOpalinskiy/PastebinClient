@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.opalinskiy.ostap.pastebin.interactor.models.PasteCodeParams;
 import com.opalinskiy.ostap.pastebin.screens.base.IBaseFragment;
 
 
@@ -12,7 +13,7 @@ public interface INewPaste {
     interface IPresenter {
         void restoreState(Bundle bundle);
 
-        void onPostPaste(String pasteCode, String name, String syntax, String expiration, String exposure);
+        void onPostPaste(PasteCodeParams params);
 
         void onClearLink();
 

@@ -1,6 +1,7 @@
 package com.opalinskiy.ostap.pastebin.screens.new_paste_screen.view;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 
 import com.opalinskiy.ostap.pastebin.R;
 import com.opalinskiy.ostap.pastebin.global.Constants;
+import com.opalinskiy.ostap.pastebin.interactor.models.PasteCodeParams;
 import com.opalinskiy.ostap.pastebin.screens.base.BaseFragment;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.INewPaste;
 import com.opalinskiy.ostap.pastebin.screens.new_paste_screen.presenter.NewPastePresenter;
@@ -58,8 +60,8 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-            outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);
-            outState.putString(Constants.LINK_KEY, tvLink.getText().toString());
+        outState.putBoolean(Constants.IS_LINK_SHOWN_KEY, isLinkShown);
+        outState.putString(Constants.LINK_KEY, tvLink.getText().toString());
         super.onSaveInstanceState(outState);
     }
 
@@ -140,15 +142,16 @@ public class NewPasteFragment extends BaseFragment implements INewPaste.IView {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String code = String.valueOf(etCode.getText());
-        String pasteName = String.valueOf(etPasteName.getText());
-        String syntax = String.valueOf(spinnerSyntax.getSelectedItem());
-        String expiration = String.valueOf(spinnerExpiration.getSelectedItem());
-        String exposure = String.valueOf(spinnerExposure.getSelectedItem());
+        PasteCodeParams params = new PasteCodeParams();
+        params.setExpiration(String.valueOf(spinnerExpiration.getSelectedItem()))
+                .setExposure(String.valueOf(spinnerExposure.getSelectedItem()))
+                .setName(String.valueOf(etPasteName.getText()))
+                .setPasteCode(String.valueOf(etCode.getText()))
+                .setSyntax(String.valueOf(spinnerSyntax.getSelectedItem()));
 
         switch (item.getItemId()) {
             case R.id.action_post_paste:
-                presenter.onPostPaste(code, pasteName, syntax, expiration, exposure);
+                presenter.onPostPaste(params);
                 break;
             case R.id.action_clear:
                 presenter.onClearLink();
