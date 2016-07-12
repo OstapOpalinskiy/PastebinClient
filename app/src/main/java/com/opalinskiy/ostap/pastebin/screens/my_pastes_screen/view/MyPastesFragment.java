@@ -83,12 +83,11 @@ public class MyPastesFragment extends BaseFragment
         stopProgress();
     }
 
-
     @Override
-    public void onDetach() {
-        super.onDetach();
+    public void onDestroyView() {
         if (presenter != null) {
             presenter.onDestroy();
         }
+        super.onDestroyView();
     }
 }

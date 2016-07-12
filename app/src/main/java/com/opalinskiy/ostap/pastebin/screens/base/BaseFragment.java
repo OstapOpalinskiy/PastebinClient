@@ -29,6 +29,8 @@ public class BaseFragment extends Fragment implements IBaseFragment {
 
     @Override
     public void setTitle(String title) {
-        getActivity().setTitle(title);
+        if(isAdded()){
+            getActivity().setTitle(title);
+        }
     }
 }

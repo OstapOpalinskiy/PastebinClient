@@ -60,11 +60,7 @@ public class PasteCodeFragment extends BaseFragment implements IPasteCodeScreen.
 
     @Override
     public void setCode(String code) {
-        if(isAdded()){
-            getActivity().setTitle(getResources().getString(R.string.paste_code));
-        }else{
-            Log.d(Constants.TAG, "Error!!!!! Fragment NOT Added yet!!!!");
-        }
+        setTitle(getResources().getString(R.string.paste_code));
         tvCode.setText(code);
     }
 
