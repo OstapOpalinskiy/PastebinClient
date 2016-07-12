@@ -14,10 +14,6 @@ import com.opalinskiy.ostap.pastebin.interactor.models.User;
 import com.opalinskiy.ostap.pastebin.screens.main_screen.IMainScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
 public class MainScreenPresenter implements IMainScreen.IPresenter {
     private IMainScreen.IView view;
     private IDataInteractor model;

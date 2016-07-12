@@ -17,10 +17,8 @@ import com.opalinskiy.ostap.pastebin.interactor.models.PasteList;
 import com.opalinskiy.ostap.pastebin.screens.my_pastes_screen.IMyPastesScreen;
 import com.opalinskiy.ostap.pastebin.utils.ConverterUtils;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 
 public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
@@ -41,6 +39,10 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     public void showMyPastes(SharedPreferences prefs) {
         String userKey = prefs.getString(Constants.USER_KEY_TAG, "");
         boolean isRegistered = prefs.getBoolean(Constants.IS_REGISTERED_KEY, false);
+        loadData(userKey, isRegistered);
+    }
+
+    private void loadData(String userKey, boolean isRegistered) {
         if (myOrTrending == Constants.MY_PASTES) {
             if (isRegistered) {
                 getMyPastes(userKey);
@@ -70,8 +72,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             @Override
             public void onSuccess(PasteList pasteList) {
                 myPastes.addAll(pasteList.getPasteList());
-                setUsersList(myPastes);
-                view.stopProgress();
+                showPastes(myPastes);
             }
 
             @Override
@@ -79,6 +80,13 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
                 showErrorMsg(msg);
             }
         });
+    }
+
+    private void showPastes(List<Paste> myPastes) {
+        if (view != null) {
+            setUsersList(myPastes);
+            view.stopProgress();
+        }
     }
 
     @Override
@@ -92,10 +100,7 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
             public void onSuccess(PasteList pasteList) {
                 myPastes.addAll(pasteList.getPasteList());
                 Log.d(Constants.TAG1, "TRENDING PRESENTER callback onSuccess()");
-                if (view != null) {
-                    setUsersList(myPastes);
-                    view.stopProgress();
-                }
+                showPastes(myPastes);
             }
 
             @Override
@@ -106,8 +111,10 @@ public class MyPastesPresenter implements IMyPastesScreen.IPresenter {
     }
 
     private void showErrorMsg(String msg) {
-        view.showMessage(msg);
-        view.stopProgress();
+        if (view != null) {
+            view.showMessage(msg);
+            view.stopProgress();
+        }
     }
 
     @Override

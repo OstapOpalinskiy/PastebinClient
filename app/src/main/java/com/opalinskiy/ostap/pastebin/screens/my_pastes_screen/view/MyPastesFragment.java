@@ -35,10 +35,10 @@ public class MyPastesFragment extends BaseFragment
             , @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_pastes_fragment, container, false);
         init(view);
-        Log.d(Constants.TAG1, "TRENDING FRAGMENT onCreateView()");
         presenter = new MyPastesPresenter(this, myOrTrending);
         presenter.choseTitle(myOrTrending);
         presenter.showMyPastes(prefs);
+        Log.d(Constants.TAG1, "TRENDING FRAGMENT onCreateView()");
         return view;
     }
 
@@ -83,10 +83,10 @@ public class MyPastesFragment extends BaseFragment
         stopProgress();
     }
 
+
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(Constants.TAG1, "TRENDING FRAGMENT onDestroyView()");
+    public void onDetach() {
+        super.onDetach();
         if (presenter != null) {
             presenter.onDestroy();
         }
